@@ -4,23 +4,29 @@ import User from "../typeorm/entities/User";
 import { UsersRepository } from "../typeorm/repositories/UsersRepository";
 
 interface Irequest {
-    name: string;
+    nome: string;
     email: string;
     senha: string;
     telefone: number;
 }
 
 class CreateUserService {
-    public async execute({ name, email, senha, telefone }: Irequest): Promise<User> {
+    public async execute({ nome, email, senha, telefone }: Irequest): Promise<User> {
         const usersRepository = getCustomRepository(UsersRepository);
-        const usersExists = await usersRepository.findByName(name);
+        const usersNameExists = await usersRepository.findByName(nome);
 
-        if (usersExists) {
+        if (usersNameExists) {
             throw new AppError('Já existe um usuário com mesmo nome!');
         }
 
+        const usersEmailExists = await usersRepository.findByEmail(email);
+
+        if (usersEmailExists) {
+            throw new AppError('Já existe um usuário com mesmo email!');
+        }
+
         const user = usersRepository.create({
-            name,
+            nome,
             email,
             senha,
             telefone,

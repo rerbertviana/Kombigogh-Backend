@@ -25,12 +25,12 @@ export default class UsersController {
     }
 
     public async create(request: Request, response: Response): Promise<Response> {
-        const { name, email, senha,  telefone} = request.body;
+        const { nome, email, senha,  telefone} = request.body;
 
         const createUsers = new CreateUserService();
 
         const users = await createUsers.execute({
-            name,
+            nome,
             email,
             senha,
             telefone,
@@ -39,14 +39,14 @@ export default class UsersController {
         return response.json(users);
     }
     public async update(request: Request, response: Response): Promise<Response> {
-        const { name, email, senha, telefone } = request.body;
+        const { nome, email, senha, telefone } = request.body;
         const { id } = request.params;
 
         const updateUsers = new UpdateUserService();
 
         const users = await updateUsers.execute({
             id,
-            name,
+            nome,
             email,
             senha,
             telefone,

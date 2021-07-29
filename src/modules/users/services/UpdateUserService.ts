@@ -5,14 +5,14 @@ import { UsersRepository } from "../typeorm/repositories/UsersRepository";
 
 interface Irequest {
     id: string;
-    name: string;
+    nome: string;
     email: string;
     senha: string;
     telefone: number;
 }
 
 class UpdateUserService {
-    public async execute({ id,  name, email, senha, telefone }: Irequest): Promise<User> {
+    public async execute({ id,  nome, email, senha, telefone }: Irequest): Promise<User> {
         const usersRepository = getCustomRepository(UsersRepository);
 
         const user = await usersRepository.findOne(id);
@@ -21,19 +21,19 @@ class UpdateUserService {
             throw new AppError('Usuário não encontrado');
         }
 
-        const usersNameExists = await usersRepository.findByName(name);
+        const usersNameExists = await usersRepository.findByName(nome);
 
         if (usersNameExists) {
             throw new AppError('Já existe um usuário com mesmo nome!');
         }
 
-        const usersEmailExists = await usersRepository.findByName(email);
+        const usersEmailExists = await usersRepository.findByEmail(email);
 
         if (usersEmailExists) {
             throw new AppError('Já existe um usuário com mesmo email!');
         }
 
-        user.name = name;
+        user.nome = nome;
         user.email = email;
         user.senha = senha;
         user.telefone = telefone;

@@ -6,7 +6,7 @@ class User {
     id: string;
 
     @Column()
-    name: string;
+    nome: string;
 
     @Column()
     email: string;
