@@ -23,13 +23,58 @@ class UpdateUserService {
 
         const usersNameExists = await usersRepository.findByName(nome);
 
-        if (usersNameExists) {
-            throw new AppError('Já existe um usuário com mesmo nome!');
+        if (!usersNameExists) {
+            
+            const usersEmailExists = await usersRepository.findByEmail(email);
+
+            if (!usersEmailExists) {
+                
+                user.nome = nome;
+                user.email = email;
+                user.senha = senha;
+                user.telefone = telefone;
+
+                await usersRepository.save(user);
+
+                return user;
+            }
+
+
+            if (usersEmailExists?.id != id) {
+                throw new AppError('Já existe um usuário com mesmo email!');
+            }
+
+            user.nome = nome;
+            user.email = email;
+            user.senha = senha;
+            user.telefone = telefone;
+
+            await usersRepository.save(user);
+
+            return user;
         }
 
+        if (usersNameExists?.id != id) {
+            throw new AppError('Já existe um usuário com mesmo nome!');
+
+        }
+        
         const usersEmailExists = await usersRepository.findByEmail(email);
 
-        if (usersEmailExists) {
+        if (!usersEmailExists) {
+
+            user.nome = nome;
+            user.email = email;
+            user.senha = senha;
+            user.telefone = telefone;
+
+            await usersRepository.save(user);
+
+            return user;
+        }
+
+
+        if (usersEmailExists?.id != id) {
             throw new AppError('Já existe um usuário com mesmo email!');
         }
 
