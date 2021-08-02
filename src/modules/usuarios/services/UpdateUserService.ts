@@ -40,7 +40,7 @@ class UpdateUserService {
             }
 
 
-            if (usersEmailExists?.id != id) {
+            if (usersEmailExists.id != id) {
                 throw new AppError('Já existe um usuário com mesmo email!');
             }
 
@@ -54,7 +54,7 @@ class UpdateUserService {
             return user;
         }
 
-        if (usersNameExists?.id != id) {
+        if (usersNameExists.id != id) {
             throw new AppError('Já existe um usuário com mesmo nome!');
 
         }
@@ -74,7 +74,7 @@ class UpdateUserService {
         }
 
 
-        if (usersEmailExists?.id != id) {
+        if (usersEmailExists.id != id) {
             throw new AppError('Já existe um usuário com mesmo email!');
         }
 
