@@ -1,6 +1,8 @@
 import { Router } from 'express';
-import usersRouter from '@modules/usuarios/routes/users.routes';
-import categoriesRouter from '@modules/categorias/routes/categories.routes'
+import categoriesRouter from '@modules/categories/routes/categories.routes';
+import usersRouter from '@modules/users/routes/users.routes';
+
+
 
 const routes = Router();
 
