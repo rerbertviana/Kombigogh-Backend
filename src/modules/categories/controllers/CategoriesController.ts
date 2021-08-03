@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import CreateCategoryService from "../services/CreateCategoryService";
+import DeleteCategoryService from "../services/DeleteCategoryService";
 import ListCategoryService from "../services/ListCategoryService";
+import ShowCategoryService from "../services/ShowCategoryService";
 import UpdateCategoryService from "../services/UpdateCategoryService";
 
 export default class CategoriesController {
@@ -26,6 +28,17 @@ export default class CategoriesController {
         return response.json(categories);
     }
 
+
+    public async show(request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+
+        const showCategories = new ShowCategoryService;
+
+        const categories = await showCategories.execute({ id });
+
+        return response.json(categories);
+    }
+
     public async update(request: Request, response: Response): Promise<Response> {
 
         const { nome } = request.body;
@@ -39,6 +52,16 @@ export default class CategoriesController {
         });
 
         return response.json(categories);
+    }
+
+    public async delete(request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+
+        const deleteCategories = new DeleteCategoryService();
+
+        await deleteCategories.execute({ id });
+
+        return response.json([]);
     }
     
     

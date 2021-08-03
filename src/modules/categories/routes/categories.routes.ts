@@ -14,7 +14,8 @@ categoriesRouter.post(
             nome: Joi.string().required(),
         },
     }),
-    categoriesController.create);
+    categoriesController.create
+);
 
 categoriesRouter.put(
     '/:id',
@@ -26,7 +27,28 @@ categoriesRouter.put(
             id: Joi.string().uuid().required(),
         },
     }),
-    categoriesController.update);
+    categoriesController.update
+);
+
+categoriesRouter.get(
+    '/:id',
+    celebrate({
+        [Segments.PARAMS]: {
+            id: Joi.string().uuid().required(),
+        },
+    }),
+    categoriesController.show
+);
+
+categoriesRouter.delete(
+    '/:id',
+    celebrate({
+        [Segments.PARAMS]: {
+            id: Joi.string().uuid().required(),
+        },
+    }),
+    categoriesController.delete
+);
 
 
 export default categoriesRouter;
