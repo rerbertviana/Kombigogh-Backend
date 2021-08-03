@@ -27,7 +27,8 @@ usersRouter.post(
             telefone: Joi.number().required(),
         },
     }),
-    usersController.create);
+    usersController.create
+);
 
 usersRouter.put(
     '/:id',
@@ -42,7 +43,8 @@ usersRouter.put(
             id: Joi.string().uuid().required(),
         },
     }),
-    usersController.update);
+    usersController.update
+);
     
 usersRouter.delete(
     '/:id',
@@ -51,7 +53,8 @@ usersRouter.delete(
             id: Joi.string().uuid().required(),
         },
     }),
-    usersController.delete);
+    usersController.delete
+);
 
 
 

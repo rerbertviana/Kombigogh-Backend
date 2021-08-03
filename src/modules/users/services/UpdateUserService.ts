@@ -1,4 +1,5 @@
 import AppError from "@shared/errors/AppError";
+import { hash } from "bcryptjs";
 import { getCustomRepository } from "typeorm";
 import User from "../typeorm/entities/User";
 import { UsersRepository } from "../typeorm/repositories/UsersRepository";
@@ -29,9 +30,11 @@ class UpdateUserService {
 
             if (!usersEmailExists) {
                 
+                const hashedPassword = await hash(senha, 8);
+
                 user.nome = nome;
                 user.email = email;
-                user.senha = senha;
+                user.senha = hashedPassword;
                 user.telefone = telefone;
 
                 await usersRepository.save(user);
@@ -44,9 +47,11 @@ class UpdateUserService {
                 throw new AppError('Já existe um usuário com mesmo email!');
             }
 
+            const hashedPassword = await hash(senha, 8);
+
             user.nome = nome;
             user.email = email;
-            user.senha = senha;
+            user.senha = hashedPassword;
             user.telefone = telefone;
 
             await usersRepository.save(user);
@@ -63,9 +68,11 @@ class UpdateUserService {
 
         if (!usersEmailExists) {
 
+            const hashedPassword = await hash(senha, 8);
+
             user.nome = nome;
             user.email = email;
-            user.senha = senha;
+            user.senha = hashedPassword;
             user.telefone = telefone;
 
             await usersRepository.save(user);
@@ -78,9 +85,11 @@ class UpdateUserService {
             throw new AppError('Já existe um usuário com mesmo email!');
         }
 
+        const hashedPassword = await hash(senha, 8);
+
         user.nome = nome;
         user.email = email;
-        user.senha = senha;
+        user.senha = hashedPassword;
         user.telefone = telefone;
 
         await usersRepository.save(user);
