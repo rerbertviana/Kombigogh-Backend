@@ -1,9 +1,11 @@
 import AppError from "@shared/errors/AppError";
 import { compare, hash } from "bcryptjs";
 import { sign } from 'jsonwebtoken';
+import authConfig from '@config/auth';
 import { getCustomRepository } from "typeorm";
 import User from "../typeorm/entities/User";
 import { UsersRepository } from "../typeorm/repositories/UsersRepository";
+import { config } from "process";
 
 interface Irequest {
     email: string;
@@ -32,9 +34,9 @@ class CreateSessionService {
             throw new AppError('Usuário ou senha incorretos!', 401);
         }
 
-        const token = sign({}, '71b18d2e416808e0211071ab1a94fe98', {
+        const token = sign({}, authConfig.jwt.secret, {
             subject: users.id,
-            expiresIn: '1d',
+            expiresIn: authConfig.jwt.expiresIn,
         })
 
         return {
