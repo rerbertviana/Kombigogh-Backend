@@ -4,6 +4,7 @@ import { sign } from 'jsonwebtoken';
 import { getCustomRepository } from "typeorm";
 import User from "../typeorm/entities/User";
 import { UsersRepository } from "../typeorm/repositories/UsersRepository";
+import authconfig from "@config/auth";
 
 
 interface Irequest {
@@ -34,9 +35,9 @@ class CreateSessionsService {
             throw new AppError('email ou senha incorretas!', 401);
         }
 
-        const token = sign({}, '57da0a8b113da4bb0f7ff5022fb57a66', {
+        const token = sign({}, authconfig.jwt.secret, {
             subject: user.id,
-            expiresIn: '1d',
+            expiresIn: authconfig.jwt.expiresIn,
         })
 
         return {
