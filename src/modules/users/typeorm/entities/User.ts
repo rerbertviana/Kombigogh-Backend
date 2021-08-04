@@ -15,10 +15,8 @@ class User {
     senha: string;
 
     @Column()
-    telefone: number;
-
-    @Column()
-    avatar: string;
+    telefone: string;
+    
 
     @CreateDateColumn()
     created_at: Date;

@@ -8,6 +8,7 @@ interface Irequest {
 
 class DeleteUserService {
     public async execute({ id }: Irequest): Promise<void> {
+        
         const usersRepository = getCustomRepository(UsersRepository);
 
         const user = await usersRepository.findOne(id);

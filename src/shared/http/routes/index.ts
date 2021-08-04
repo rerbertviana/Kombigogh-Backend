@@ -5,11 +5,13 @@ import sessionsRouter from '@modules/users/routes/sessions.routes';
 
 
 
+
 const routes = Router();
 
-routes.use('/users', usersRouter);
 routes.use('/categories', categoriesRouter);
+routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
+
 
 routes.get('/', (request, response) => {
     return response.json({ message: 'Testando!' });

@@ -8,11 +8,12 @@ interface Irequest {
 }
 
 class ShowUserService {
-    public async execute({id}:Irequest): Promise<User | undefined> {
+    public async execute({ id }: Irequest): Promise<User | undefined> {
+
         const usersRepository = getCustomRepository(UsersRepository);
-        
+
         const user = await usersRepository.findOne(id);
-        
+
         if (!user) {
             throw new AppError('Usuário não encontrado');
         }

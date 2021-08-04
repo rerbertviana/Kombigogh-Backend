@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
+import UsersController from '../controllers/UsersConstroller';
 import SessionsController from '../controllers/SessionsController';
 
 const sessionsRouter = Router();
@@ -17,5 +18,5 @@ sessionsRouter.post(
     sessionsController.create
 );
 
-export default sessionsRouter;
 
+export default sessionsRouter;
