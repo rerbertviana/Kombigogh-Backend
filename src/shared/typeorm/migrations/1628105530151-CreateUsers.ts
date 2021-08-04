@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class CreateUsers1628089196200 implements MigrationInterface {
 
@@ -29,6 +29,11 @@ export class CreateUsers1628089196200 implements MigrationInterface {
                     {
                         name: 'telefone',
                         type: 'varchar',
+                    },
+                    {
+                        name: 'avatar',
+                        type: 'varchar',
+                        isNullable: true,
                     },
                     {
                         name: 'created_at',

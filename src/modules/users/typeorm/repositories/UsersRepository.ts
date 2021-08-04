@@ -19,4 +19,12 @@ export class UsersRepository extends Repository<User> {
         });
         return category;
     }
+    public async findById(id: string): Promise<User | undefined> {
+        const category = this.findOne({
+            where: {
+                id,
+            },
+        });
+        return category;
+    }
 }
