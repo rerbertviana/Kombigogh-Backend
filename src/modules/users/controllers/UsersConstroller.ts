@@ -10,6 +10,7 @@ import UpdateUserService from "../services/UpdateUserService";
 export default class UsersController {
 
     public async index(request: Request, response: Response): Promise<Response> {
+        
         const listusers = new ListUserService();
 
         const users = await listusers.execute();
