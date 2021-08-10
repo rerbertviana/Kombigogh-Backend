@@ -1,8 +1,6 @@
-import { query } from "express";
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUserTokens1628535048294 implements MigrationInterface {
-
+export class CreateUserTokens1607917238905 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
@@ -25,6 +23,16 @@ export class CreateUserTokens1628535048294 implements MigrationInterface {
                         name: 'user_id',
                         type: 'uuid',
                     },
+                    {
+                        name: 'created_at',
+                        type: 'timestamp',
+                        default: 'now()',
+                    },
+                    {
+                        name: 'updated_at',
+                        type: 'timestamp',
+                        default: 'now()',
+                    },
                 ],
                 foreignKeys: [
                     {
@@ -34,8 +42,8 @@ export class CreateUserTokens1628535048294 implements MigrationInterface {
                         columnNames: ['user_id'],
                         onDelete: 'CASCADE',
                         onUpdate: 'CASCADE',
-                    }
-                ]
+                    },
+                ],
             }),
         );
     }
@@ -43,5 +51,4 @@ export class CreateUserTokens1628535048294 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropTable('user_tokens');
     }
-
 }
