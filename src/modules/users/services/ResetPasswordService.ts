@@ -3,7 +3,7 @@ import { getCustomRepository } from "typeorm";
 import { isAfter, addHours } from "date-fns";
 import { hash } from 'bcryptjs';
 import { UsersRepository } from "../typeorm/repositories/UsersRepository";
-import { UserTokensRepository } from "../typeorm/repositories/UserTokensRepository ";
+import UserTokensRepository  from "../typeorm/repositories/UserTokensRepository ";
 
 
 interface Irequest {
@@ -39,6 +39,8 @@ class ResetPasswordService {
         }
 
         user.senha = await hash(senha, 8);
+
+        await usersRepository.save(user);
 
     }
 }
