@@ -19,14 +19,24 @@ class SendForgotPasswordEmailService {
             throw new AppError('Email não cadastrado no sistema.');
         }
 
-        const token = await userTokensRepository.generate(user.id);
+        const { token } = await userTokensRepository.generate(user.id);
 
         //console.log(token);
 
         await EtherealMail.sendMail({
-            to: email,
-            body: `Solicitação de redefinição de senha recebida: ${token?.token}`,
-        })
+            to: {
+                name: user.nome,
+                email: user.email,
+            },
+            subject: 'Recuperação de Senha',
+            templateData: {
+                template: `Olá {{name}}: {{token}}`,
+                variables: {
+                    name: user.nome,
+                    token,
+                },
+            },
+        });
 
     }
 }
