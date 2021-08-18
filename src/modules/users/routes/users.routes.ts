@@ -40,16 +40,10 @@ usersRouter.get(
 );
 
 usersRouter.put(
-    '/:id',
+    '/:user_id',
     celebrate({
-        [Segments.BODY]: {
-            nome: Joi.string().required(),
-            email: Joi.string().required(),
-            senha: Joi.string().required(),
-            telefone: Joi.string().required(),
-        },
         [Segments.PARAMS]: {
-            id: Joi.string().uuid().required(),
+            user_id: Joi.string().uuid().required(),
         },
     }),
     usersController.update

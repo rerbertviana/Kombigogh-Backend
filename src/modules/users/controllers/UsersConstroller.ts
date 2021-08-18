@@ -4,7 +4,8 @@ import CreateUserService from "../services/CreateUserService";
 import DeleteUserService from "../services/DeleteUserService";
 import ListUserService from "../services/ListUserService";
 import ShowUserService from "../services/ShowUserService";
-import UpdateUserService from "../services/UpdateUserService";
+import UpdateProfileService from "../services/UpdateProfileService";
+
 
 
 export default class UsersController {
@@ -46,17 +47,18 @@ export default class UsersController {
 
     public async update(request: Request, response: Response): Promise<Response> {
 
-        const { nome, email, senha, telefone } = request.body;
-        const { id } = request.params;
+        const { nome, email, senha, senha_antiga, telefone } = request.body;
+        const { user_id } = request.params;
 
-        const updateUsers = new UpdateUserService();
+        const updateUsers = new UpdateProfileService();
 
         const user = await updateUsers.execute({
-            id,
+            user_id,
             nome,
             email,
             senha,
-            telefone
+            senha_antiga,
+            telefone,
         });
 
         return response.json(user);
