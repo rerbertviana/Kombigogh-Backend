@@ -4,15 +4,15 @@ import User from "../typeorm/entities/User";
 import { UsersRepository } from "../typeorm/repositories/UsersRepository";
 
 interface Irequest {
-    id: string;
+    user_id: string;
 }
 
 class ShowProfileService {
-    public async execute({ id }: Irequest): Promise<User | undefined> {
+    public async execute({ user_id }: Irequest): Promise<User | undefined> {
 
         const usersRepository = getCustomRepository(UsersRepository);
 
-        const user = await usersRepository.findOne(id);
+        const user = await usersRepository.findOne(user_id);
 
         if (!user) {
             throw new AppError('Usuário não encontrado');

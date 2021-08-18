@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import CreateUserService from "../services/CreateUserService";
 import DeleteUserService from "../services/DeleteUserService";
 import ListUserService from "../services/ListUserService";
-import ShowUserService from "../services/ShowUserService";
+import ShowProfileService from "../services/ShowProfileService";
 import UpdateProfileService from "../services/UpdateProfileService";
 
 
@@ -30,35 +30,6 @@ export default class UsersController {
             email,
             senha,
             telefone
-        });
-
-        return response.json(user);
-    }
-
-    public async show(request: Request, response: Response): Promise<Response> {
-        const { id } = request.params;
-
-        const showUsers = new ShowUserService();
-
-        const user = await showUsers.execute({ id });
-
-        return response.json(user);
-    }
-
-    public async update(request: Request, response: Response): Promise<Response> {
-
-        const { nome, email, senha, senha_antiga, telefone } = request.body;
-        const { user_id } = request.params;
-
-        const updateUsers = new UpdateProfileService();
-
-        const user = await updateUsers.execute({
-            user_id,
-            nome,
-            email,
-            senha,
-            senha_antiga,
-            telefone,
         });
 
         return response.json(user);

@@ -29,26 +29,6 @@ usersRouter.post(
     usersController.create
 );
 
-usersRouter.get(
-    '/:id',
-    celebrate({
-        [Segments.PARAMS]: {
-            id: Joi.string().uuid().required(),
-        },
-    }),
-    usersController.show
-);
-
-usersRouter.put(
-    '/:user_id',
-    celebrate({
-        [Segments.PARAMS]: {
-            user_id: Joi.string().uuid().required(),
-        },
-    }),
-    usersController.update
-);
-
 usersRouter.delete(
     '/:id',
     celebrate({
