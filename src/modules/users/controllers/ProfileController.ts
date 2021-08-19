@@ -37,8 +37,6 @@ export default class SessionsController {
     }
 
 
-
-
 }
 
 
