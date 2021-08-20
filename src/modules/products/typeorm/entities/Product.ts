@@ -3,7 +3,7 @@ import User from '@modules/users/typeorm/entities/User';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('products')
-class Products {
+class Product {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -37,4 +37,4 @@ class Products {
     updated_at: Date;
 }
 
-export default Products;
+export default Product;

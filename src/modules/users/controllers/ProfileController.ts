@@ -5,7 +5,7 @@ import UpdateProfileService from "../services/UpdateProfileService";
 
 
 
-export default class SessionsController {
+export default class ProfileController {
 
     public async show(request: Request, response: Response): Promise<Response> {
         

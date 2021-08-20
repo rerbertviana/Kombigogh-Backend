@@ -1,10 +1,7 @@
-import ShowCategoryService from "@modules/categories/services/ShowCategoryService";
 import { Request, Response } from "express";
 import CreateUserService from "../services/CreateUserService";
 import DeleteUserService from "../services/DeleteUserService";
 import ListUserService from "../services/ListUserService";
-import ShowProfileService from "../services/ShowProfileService";
-import UpdateProfileService from "../services/UpdateProfileService";
 
 
 
