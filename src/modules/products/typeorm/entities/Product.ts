@@ -1,5 +1,5 @@
-import Category from '@modules/categories/typeorm/entities/Category';
-import User from '@modules/users/typeorm/entities/User';
+import Category from '../../../categories/typeorm/entities/Category';
+import User from '../../../users/typeorm/entities/User';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('products')
@@ -22,13 +22,15 @@ class Product {
     @Column("int4")
     quantidade: number;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, user => user.product)
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @ManyToOne(() => Category)
-    @JoinColumn({ name: 'category_id' })
-    category: Category;
+    @Column()
+    user_id: string;
+
+    @Column()
+    category_id: string;
 
     @CreateDateColumn()
     created_at: Date;

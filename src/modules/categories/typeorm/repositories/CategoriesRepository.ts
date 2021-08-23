@@ -4,7 +4,7 @@ import Category from "../entities/Category";
 @EntityRepository(Category)
 export class CategoriesRepository extends Repository<Category> {
     public async findByName(nome: string): Promise<Category | undefined> {
-        const category = this.findOne({
+        const category = await this.findOne({
             where: {
                 nome,
             },

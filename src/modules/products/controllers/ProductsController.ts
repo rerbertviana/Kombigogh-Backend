@@ -14,12 +14,14 @@ export default class ProductsController {
         const { nome, descricao, preco, quantidade } = request.body;
 
         const createProducts = new CreateProductService();
+        const user_id = request.user.id;
 
         const user = await createProducts.execute({
+            user_id,
             nome,
             descricao,
             preco,
-            quantidade
+            quantidade,
         });
 
         return response.json(user);
