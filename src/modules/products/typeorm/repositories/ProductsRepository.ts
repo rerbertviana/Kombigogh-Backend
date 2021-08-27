@@ -1,4 +1,3 @@
-import User from "@modules/users/typeorm/entities/User";
 import { EntityRepository, Repository } from "typeorm";
 import Product from "../entities/Product";
 
@@ -15,10 +14,10 @@ export class ProductsRepository extends Repository<Product> {
         return product;
     }
 
-    public async findById(product_id: string): Promise<Product | undefined> {
+    public async findById(id: string): Promise<Product | undefined> {
         const product = await this.findOne({
             where: {
-                product_id,
+                id,
             },
         });
         return product;

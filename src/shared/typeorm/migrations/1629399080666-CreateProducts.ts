@@ -38,12 +38,10 @@ export class CreateProducts1629399080666 implements MigrationInterface {
                     {
                         name: 'user_id',
                         type: 'uuid',
-                        isNullable: true,
                     },
                     {
                         name: 'category_id',
                         type: 'uuid',
-                        isNullable: true,
                     },
                     {
                         name: 'created_at',

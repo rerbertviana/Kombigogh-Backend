@@ -16,7 +16,7 @@ class ShowCategoryService {
         const categories = await categoriesRepository.findOne(id);
         
         if (!categories) {
-            throw new AppError('Usuário não encontrado');
+            throw new AppError('Categoria não encontrada.');
         }
 
         return categories;
