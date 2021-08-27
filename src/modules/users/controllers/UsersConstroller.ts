@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import CreateUserService from "../services/CreateUserService";
 import DeleteUserService from "../services/DeleteUserService";
+import ListProductUserService from "../services/ListProductUserService";
 import ListUserService from "../services/ListUserService";
 
 
@@ -41,5 +42,17 @@ export default class UsersController {
 
         return response.json([]);
     }
- 
+
+    public async products(request: Request, response: Response): Promise<Response> {
+
+        const user_id = request.user.id;
+        
+        const listprodcuts = new ListProductUserService();
+
+        const users = await listprodcuts.execute({ user_id });
+
+        return response.json(users);
+    }
+
+
 }

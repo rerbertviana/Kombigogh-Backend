@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import ShowProductService from "../services/ShowProductService";
 import UpdateProductAvatarService from "../services/UpdateProductAvatarService";
 
 

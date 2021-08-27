@@ -1,3 +1,4 @@
+import Product from '@modules/products/typeorm/entities/Product';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('categories')
@@ -7,6 +8,11 @@ class Category {
 
     @Column()
     nome: string;
+
+    @OneToMany(() => Product, product => product.category, {
+        cascade: true,
+    })
+    product: Product[];
 
     @CreateDateColumn()
     created_at: Date;

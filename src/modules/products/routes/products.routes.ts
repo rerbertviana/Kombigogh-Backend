@@ -17,8 +17,11 @@ productsRouter.use(isAuthenticated);
 productsRouter.get('/', productsController.index);
 
 productsRouter.post(
-    '/',
+    '/:category_id',
     celebrate({
+        [Segments.PARAMS]: {
+            category_id: Joi.string().uuid().required(),
+        },
         [Segments.BODY]: {
             nome: Joi.string().required(),
             descricao: Joi.string().required(),

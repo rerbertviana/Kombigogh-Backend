@@ -11,4 +11,13 @@ export class CategoriesRepository extends Repository<Category> {
         });
         return category;
     }
+
+    public async findByProducts(category_id: string): Promise<Category | undefined> {
+        const users = await this.findOne(category_id, {
+            relations: ['product'],
+        });
+
+        return users;
+    }
+
 }

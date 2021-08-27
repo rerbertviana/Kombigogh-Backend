@@ -11,6 +11,7 @@ export default class ProductsController {
 
     public async create(request: Request, response: Response): Promise<Response> {
 
+        const { category_id } = request.params;
         const { nome, descricao, preco, quantidade } = request.body;
 
         const createProducts = new CreateProductService();
@@ -22,6 +23,7 @@ export default class ProductsController {
             descricao,
             preco,
             quantidade,
+            category_id
         });
 
         return response.json(user);

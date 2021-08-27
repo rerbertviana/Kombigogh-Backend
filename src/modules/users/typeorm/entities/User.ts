@@ -24,12 +24,7 @@ class User {
     @OneToMany(() => Product, product => product.user, {
         cascade: true,
     })
-    @JoinColumn({ name: 'product_id' })
     product: Product[];
-
-    @Column()
-    product_id: string;
-
 
     @CreateDateColumn()
     created_at: Date;

@@ -26,6 +26,10 @@ class Product {
     @JoinColumn({ name: 'user_id' })
     user: User;
 
+    @ManyToOne(() => Category, category => category.product)
+    @JoinColumn({ name: 'category_id' })
+    category: Category;
+
     @Column()
     user_id: string;
 

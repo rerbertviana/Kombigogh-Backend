@@ -12,12 +12,13 @@ interface Irequest {
     descricao: string;
     preco: number;
     quantidade: number;
+    category_id: string;
 
 }
 
 class CreateProductService {
 
-    public async execute({ nome, user_id, descricao, preco, quantidade }: Irequest): Promise<Product> {
+    public async execute({ nome, user_id, descricao, preco, quantidade, category_id }: Irequest): Promise<Product> {
 
         const productsRepository = getCustomRepository(ProductsRepository);
         const products = await productsRepository.findByName(nome);
@@ -37,15 +38,13 @@ class CreateProductService {
             descricao,
             preco,
             quantidade,
+            category_id
         });
 
         await productsRepository.save(product);
- 
-        if (users) {
-            await usersRepository.createProductUser([product]);
-        }        
-            
+             
         return product;
+
     }
     
 }

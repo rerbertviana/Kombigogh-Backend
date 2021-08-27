@@ -5,22 +5,23 @@ import Product from "../entities/Product";
 
 @EntityRepository(Product)
 export class ProductsRepository extends Repository<Product> {
+    
     public async findByName(nome: string): Promise<Product | undefined> {
-        const user = await this.findOne({
+        const product = await this.findOne({
             where: {
                 nome,
             },
         });
-        return user;
+        return product;
     }
 
-    public async findById(id: string): Promise<Product | undefined> {
-        const user = await this.findOne({
+    public async findById(product_id: string): Promise<Product | undefined> {
+        const product = await this.findOne({
             where: {
-                id,
+                product_id,
             },
         });
-        return user;
+        return product;
     }
 
 

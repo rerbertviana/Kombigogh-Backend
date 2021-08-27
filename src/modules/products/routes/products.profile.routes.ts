@@ -9,10 +9,10 @@ const profileProductsController = new ProfileProductsController();
 productsProfileRouter.use(isAuthenticated);
 
 productsProfileRouter.get(
-    '/show/:id',
+    '/:product_id',
     celebrate({
         [Segments.PARAMS]: {
-            id: Joi.string().uuid().required(),
+            product_id: Joi.string().uuid().required(),
         },
     }),
     profileProductsController.show
@@ -20,10 +20,11 @@ productsProfileRouter.get(
 
 
 productsProfileRouter.put(
-    '/:product_id',
+    '/:product_id/:category_id',
     celebrate({
         [Segments.PARAMS]: {
             product_id: Joi.string().uuid().required(),
+            category_id: Joi.string().uuid().required(),
         },
         [Segments.BODY]: {
             nome: Joi.string().required(),

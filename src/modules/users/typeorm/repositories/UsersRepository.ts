@@ -1,7 +1,5 @@
-import Product from "@modules/products/typeorm/entities/Product";
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import User from "../entities/User";
-
 
 
 @EntityRepository(User)
@@ -30,12 +28,13 @@ export class UsersRepository extends Repository<User> {
         });
         return user;
     }
-    public async createProductUser(product_id: Product[]): Promise<User> {
-        const user = this.create({
-            product: product_id,
+
+    public async findByProducts(user_id: string): Promise<User | undefined> {
+        const users = await this.findOne(user_id, {
+            relations: ['product'],
         });
 
-        await this.save(user);
-        return user;
+        return users;
     }
+
 }

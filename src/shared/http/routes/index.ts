@@ -6,6 +6,8 @@ import passwordRouter from '@modules/users/routes/password.routes';
 import profileRouter from '@modules/users/routes/profile.routes';
 import productsRouter from '@modules/products/routes/products.routes';
 import productsProfileRouter from '@modules/products/routes/products.profile.routes';
+import productsUsersRouter from '@modules/users/routes/products.users.routes';
+import productsCategoriesRouter from '@modules/categories/routes/products.categories.routes';
 
 
 
@@ -19,6 +21,10 @@ routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);
 routes.use('/products', productsRouter);
 routes.use('/productsprofile', productsProfileRouter);
+routes.use('/usersproducts', productsUsersRouter);
+routes.use('/categoriesproducts', productsCategoriesRouter);
+
+
 
 
 routes.get('/', (request, response) => {

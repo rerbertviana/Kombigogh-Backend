@@ -9,10 +9,11 @@ interface IRequest {
     descricao: string;
     preco: number;
     quantidade: number;
+    category_id: string;
 }
 
 class UpdateProductService {
-    public async execute({ product_id, nome, descricao, preco, quantidade }: IRequest): Promise<Product> {
+    public async execute({ product_id, nome, descricao, preco, quantidade, category_id}: IRequest): Promise<Product> {
 
         const productsRepository = getCustomRepository(ProductsRepository);
 
@@ -25,7 +26,7 @@ class UpdateProductService {
         const productUpdateName = await productsRepository.findByName(nome);
 
         if (productUpdateName && productUpdateName.id !== product_id) {
-            throw new AppError('Já existe usuário cadastrado com mesmo nome.');
+            throw new AppError('Já existe produto cadastrado com mesmo nome.');
         }
 
 
@@ -33,6 +34,7 @@ class UpdateProductService {
         product.descricao = descricao;
         product.preco = preco;
         product.quantidade = quantidade;
+        product.category_id = category_id;
 
 
         await productsRepository.save(product);
