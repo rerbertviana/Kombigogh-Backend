@@ -1,11 +1,11 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateProducts1629399080666 implements MigrationInterface {
+export class CreateOrders1630174691873 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
-            new Table({
-                name: 'products',
+            new Table ({
+                name: 'orders',
                 columns: [
                     {
                         name: 'id',
@@ -15,33 +15,16 @@ export class CreateProducts1629399080666 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'nome',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'descricao',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'imagem',
+                        name: 'cliente',
                         type: 'varchar',
                         isNullable: true,
                     },
                     {
-                        name: 'preco',
+                        name: 'total',
                         type: 'float',
                     },
                     {
-                        name: 'quantidade',
-                        type: 'int',
-                    },
-                    {
                         name: 'user_id',
-                        type: 'uuid',
-                        isNullable: true,
-                    },
-                    {
-                        name: 'category_id',
                         type: 'uuid',
                         isNullable: true,
                     },
@@ -58,28 +41,19 @@ export class CreateProducts1629399080666 implements MigrationInterface {
                 ],
                 foreignKeys: [
                     {
-                        name: 'ProductUser',
+                        name: 'OrderUser',
                         referencedTableName: 'users',
                         referencedColumnNames: ['id'],
                         columnNames: ['user_id'],
                         onDelete: 'SET NULL',
                         onUpdate: 'CASCADE',
-                    },
-                    {
-                        name: 'ProductCategory',
-                        referencedTableName: 'categories',
-                        referencedColumnNames: ['id'],
-                        columnNames: ['category_id'],
-                        onDelete: 'SET NULL',
-                        onUpdate: 'CASCADE',
-                    },
+                    }
                 ],
             }),
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('products');
+        await queryRunner.dropTable('orders');
     }
-
 }

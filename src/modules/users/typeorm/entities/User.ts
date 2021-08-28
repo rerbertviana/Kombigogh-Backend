@@ -1,5 +1,6 @@
 import Product from '../../../products/typeorm/entities/Product';
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import Order from '../../../orders/typeorm/entities/Order';
 
 @Entity('users')
 class User {
@@ -22,6 +23,11 @@ class User {
     avatar: string;
 
     @OneToMany(() => Product, product => product.user, {
+        cascade: true,
+    })
+    product: Product[];
+
+    @OneToMany(() => Order, product => product.user, {
         cascade: true,
     })
     product: Product[];
