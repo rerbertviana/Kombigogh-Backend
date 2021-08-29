@@ -1,24 +1,34 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
+
 import User from '../../../users/typeorm/entities/User';
+import OrdersProducts from './OrdersProducts';
 
 @Entity('orders')
 class Order {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
-    cliente: string;
-
-    @Column("float8")
-    total: number;
-
-    @ManyToOne(() => User, user => user.order)
+    @ManyToOne(() => User)
     @JoinColumn({ name: 'user_id' })
     user: User;
 
     @Column()
     user_id: string;
-    
+
+    @OneToMany(() => OrdersProducts, order_products => order_products.order, {
+        cascade: true,
+    })
+    order_products: OrdersProducts[];
+
     @CreateDateColumn()
     created_at: Date;
 

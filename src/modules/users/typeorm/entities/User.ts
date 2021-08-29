@@ -27,11 +27,6 @@ class User {
     })
     product: Product[];
 
-    @OneToMany(() => Order, order => order.user, {
-        cascade: true,
-    })
-    order: Order[];
-
     @CreateDateColumn()
     created_at: Date;
 

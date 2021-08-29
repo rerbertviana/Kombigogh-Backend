@@ -20,10 +20,6 @@ export class CreateOrders1630174691873 implements MigrationInterface {
                         isNullable: true,
                     },
                     {
-                        name: 'total',
-                        type: 'float',
-                    },
-                    {
                         name: 'user_id',
                         type: 'uuid',
                         isNullable: true,

@@ -1,6 +1,8 @@
 import Category from '../../../categories/typeorm/entities/Category';
 import User from '../../../users/typeorm/entities/User';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import OrdersProducts from '../../../orders/typeorm/entities/OrdersProducts';
+
 
 @Entity('products')
 class Product {
@@ -29,6 +31,9 @@ class Product {
     @ManyToOne(() => Category, category => category.product)
     @JoinColumn({ name: 'category_id' })
     category: Category;
+
+    @OneToMany(() => OrdersProducts, order_products => order_products.product)
+    order_products: OrdersProducts[];
 
     @Column()
     user_id: string;
