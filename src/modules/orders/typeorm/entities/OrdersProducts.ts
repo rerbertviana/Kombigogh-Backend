@@ -30,10 +30,10 @@ class OrdersProducts {
     @Column()
     product_id: string;
 
-    @Column('float8')
+    @Column("float8")
     preco: number;
 
-    @Column('int4')
+    @Column("int4")
     quantidade: number;
 
     @CreateDateColumn()

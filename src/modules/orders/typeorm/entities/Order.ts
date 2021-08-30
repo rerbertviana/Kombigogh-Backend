@@ -17,12 +17,15 @@ class Order {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, user => user.order)
     @JoinColumn({ name: 'user_id' })
     user: User;
 
     @Column()
     user_id: string;
+
+    @Column()
+    cliente: string;
 
     @OneToMany(() => OrdersProducts, order_products => order_products.order, {
         cascade: true,

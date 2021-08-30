@@ -22,9 +22,9 @@ class CreateOrderService {
         const usersRepository = getCustomRepository(UsersRepository);
         const productsRepository = getCustomRepository(ProductRepository);
 
-        const customerExists = await usersRepository.findById(user_id);
+        const userExists = await usersRepository.findById(user_id);
 
-        if (!customerExists) {
+        if (!userExists) {
             throw new AppError('nã foi possível encontrar o usuário.');
         }
 
@@ -36,9 +36,11 @@ class CreateOrderService {
 
         const existsProductsIds = existsProducts.map(product => product.id);
 
+
         const checkInexistentProducts = products.filter(
             product => !existsProductsIds.includes(product.id),
         );
+
 
         if (checkInexistentProducts.length) {
             throw new AppError(
@@ -52,10 +54,10 @@ class CreateOrderService {
                 product.quantidade,
         );
 
+
         if (quantityAvailable.length) {
             throw new AppError(
-            `A quantidade ${quantityAvailable[0].quantidade}
-             não está disponível para esse produto ${quantityAvailable[0].id}.`,
+            `A quantidade ${quantityAvailable[0].quantidade} não está disponível para esse produto: ${quantityAvailable[0].id}.`,
             );
         }
 
@@ -65,10 +67,12 @@ class CreateOrderService {
             preco: existsProducts.filter(p => p.id === product.id)[0].preco,
         }));
 
+
         const order = await ordersRepository.createOrder({
-            user: customerExists,
-            products: serializedProducts,
-        });
+            user: user_id,
+            products_array: serializedProducts
+        })
+        
 
         const { order_products } = order;
 

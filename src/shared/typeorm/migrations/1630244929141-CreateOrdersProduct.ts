@@ -15,7 +15,7 @@ export class CreateOrdersProduct1630244929141 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'preço',
+                        name: 'preco',
                         type: 'float',
                     },
                     {
