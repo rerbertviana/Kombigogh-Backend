@@ -8,6 +8,8 @@ const ordersController = new OrdersController();
 
 ordersRouter.use(isAuthenticated);
 
+ordersRouter.get('/', isAuthenticated, ordersController.index);
+
 ordersRouter.get(
     '/:id',
     celebrate({
@@ -23,6 +25,7 @@ ordersRouter.post(
     celebrate({
         [Segments.BODY]: {
             products: Joi.required(),
+            cliente: Joi.string().required(),
         },
     }),
     ordersController.create,

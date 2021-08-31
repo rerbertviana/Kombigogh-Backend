@@ -29,12 +29,21 @@ export class UsersRepository extends Repository<User> {
         return user;
     }
 
-    public async findByProducts(user_id: string): Promise<User | undefined> {
-        const users = await this.findOne(user_id, {
+    public async findByProducts(id: string): Promise<User | undefined> {
+        const users = await this.findOne(id, {
             relations: ['product'],
         });
 
         return users;
     }
+
+    public async findByOrders(id: string): Promise<User | undefined> {
+        const users = await this.findOne(id, {
+            relations: ['order'],
+        });
+
+        return users;
+    }
+
 
 }

@@ -9,6 +9,7 @@ import productsProfileRouter from '@modules/products/routes/products.profile.rou
 import productsUsersRouter from '@modules/users/routes/products.users.routes';
 import productsCategoriesRouter from '@modules/categories/routes/products.categories.routes';
 import ordersRouter from '@modules/orders/routes/orders.routes';
+import ordersUsersRouter from '@modules/users/routes/orders.users.routes';
 
 
 
@@ -23,6 +24,7 @@ routes.use('/profile', profileRouter);
 routes.use('/products', productsRouter);
 routes.use('/productsprofile', productsProfileRouter);
 routes.use('/usersproducts', productsUsersRouter);
+routes.use('/usersorders', ordersUsersRouter);
 routes.use('/categoriesproducts', productsCategoriesRouter);
 routes.use('/orders', ordersRouter);
 

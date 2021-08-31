@@ -10,6 +10,7 @@ interface IProduct {
 interface IRequest {
     user: string;
     products_array: IProduct[];
+    cliente: string;
 }
 
 @EntityRepository(Order)
@@ -22,10 +23,11 @@ class OrdersRepository extends Repository<Order> {
         return order;
     }
 
-    public async createOrder({ user, products_array }: IRequest): Promise<Order> {
+    public async createOrder({ user, products_array, cliente }: IRequest): Promise<Order> {
         const order = await this.create({
             user_id: user,
             order_products: products_array,
+            cliente
         });
 
         await this.save(order);

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import CreateUserService from "../services/CreateUserService";
 import DeleteUserService from "../services/DeleteUserService";
+import ListOrderUserService from "../services/ListOrderUserService";
 import ListProductUserService from "../services/ListProductUserService";
 import ListUserService from "../services/ListUserService";
 
@@ -50,6 +51,18 @@ export default class UsersController {
         const listprodcuts = new ListProductUserService();
 
         const users = await listprodcuts.execute({ user_id });
+
+        return response.json(users);
+    }
+
+
+    public async orders(request: Request, response: Response): Promise<Response> {
+
+        const user_id = request.user.id;
+
+        const listorders = new ListOrderUserService();
+
+        const users = await listorders.execute({ user_id });
 
         return response.json(users);
     }

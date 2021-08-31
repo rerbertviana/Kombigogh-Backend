@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import CreateOrderService from '../services/CreateOrderService';
+import ListOrderService from '../services/ListOrderService';
 import ShowOrderService from '../services/ShowOrderService';
 
 export default class OrdersController {
@@ -14,16 +15,26 @@ export default class OrdersController {
     }
 
     public async create(request: Request, response: Response): Promise<Response> {
-        const { products } = request.body;
-        const user_id = request.user.id;
+        const { cliente, products } = request.body;
+        const user_id = request.user.id
 
         const createOrder = new CreateOrderService();
 
         const order = await createOrder.execute({
             user_id,
             products,
+            cliente
         });
 
         return response.json(order);
+    }
+
+    public async index(request: Request, response: Response): Promise<Response> {
+
+        const listorders = new ListOrderService();
+
+        const orders = await listorders.execute();
+
+        return response.json(orders);
     }
 }

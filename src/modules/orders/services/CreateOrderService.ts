@@ -13,10 +13,11 @@ interface IProduct {
 interface IRequest {
     user_id: string;
     products: IProduct[];
+    cliente: string;
 }
 
 class CreateOrderService {
-    public async execute({ user_id, products }: IRequest): Promise<Order> {
+    public async execute({ user_id, products, cliente}: IRequest): Promise<Order> {
         
         const ordersRepository = getCustomRepository(OrdersRepository);
         const usersRepository = getCustomRepository(UsersRepository);
@@ -70,10 +71,10 @@ class CreateOrderService {
 
         const order = await ordersRepository.createOrder({
             user: user_id,
-            products_array: serializedProducts
+            products_array: serializedProducts,
+            cliente
         })
         
-
         const { order_products } = order;
 
         const updatedProductQuantity = order_products.map(product => ({
@@ -84,6 +85,8 @@ class CreateOrderService {
         }));
 
         await productsRepository.save(updatedProductQuantity);
+
+        
 
         return order;
     }
