@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import CreateOrderService from '../services/CreateOrderService';
+import DisableOrderService from '../services/ReverseOrderService';
+import DeleteOrderService from '../services/ReverseOrderService';
 import ListOrderService from '../services/ListOrderService';
 import ShowOrderService from '../services/ShowOrderService';
+import ReverseOrderService from '../services/ReverseOrderService';
 
 export default class OrdersController {
     public async show(request: Request, response: Response): Promise<Response> {
@@ -36,5 +39,15 @@ export default class OrdersController {
         const orders = await listorders.execute();
 
         return response.json(orders);
+    }
+
+    public async reverse(request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+
+        const reverseOrders = new ReverseOrderService();
+
+        await reverseOrders.execute({ id });
+
+        return response.json([]);
     }
 }

@@ -15,6 +15,10 @@ export class CreateOrders1630174691873 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
+                        name: 'status',
+                        type: 'varchar',
+                    },
+                    {
                         name: 'cliente',
                         type: 'varchar',
                         isNullable: true,

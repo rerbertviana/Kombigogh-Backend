@@ -27,10 +27,14 @@ class Order {
     @Column()
     cliente: string;
 
+    @Column()
+    status: string;
+
     @OneToMany(() => OrdersProducts, order_products => order_products.order, {
         cascade: true,
     })
     order_products: OrdersProducts[];
+
 
     @CreateDateColumn()
     created_at: Date;

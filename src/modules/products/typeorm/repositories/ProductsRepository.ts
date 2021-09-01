@@ -39,6 +39,17 @@ export class ProductsRepository extends Repository<Product> {
         return existentProducts;
     }
 
+    public async findByIdProduct(guardarvalores: string[]): Promise<Product[]> {
+
+        const old_products = await this.find({
+            where: {
+                id: In(guardarvalores),
+            },
+        });
+
+        return old_products;
+    }
+
 
 }
 

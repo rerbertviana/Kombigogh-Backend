@@ -31,4 +31,14 @@ ordersRouter.post(
     ordersController.create,
 );
 
+ordersRouter.post(
+    '/:id',
+    celebrate({
+        [Segments.PARAMS]: {
+            id: Joi.string().uuid().required(),
+        },
+    }),
+    ordersController.reverse
+);
+
 export default ordersRouter;

@@ -72,7 +72,8 @@ class CreateOrderService {
         const order = await ordersRepository.createOrder({
             user: user_id,
             products_array: serializedProducts,
-            cliente
+            cliente,
+            status: "ok",
         })
         
         const { order_products } = order;
@@ -85,8 +86,6 @@ class CreateOrderService {
         }));
 
         await productsRepository.save(updatedProductQuantity);
-
-        
 
         return order;
     }
