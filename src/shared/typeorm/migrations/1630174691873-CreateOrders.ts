@@ -19,6 +19,10 @@ export class CreateOrders1630174691873 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
+                        name: 'total',
+                        type: 'float',
+                    },
+                    {
                         name: 'cliente',
                         type: 'varchar',
                         isNullable: true,

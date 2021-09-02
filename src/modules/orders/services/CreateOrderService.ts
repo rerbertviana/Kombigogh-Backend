@@ -74,9 +74,22 @@ class CreateOrderService {
             products_array: serializedProducts,
             cliente,
             status: "ok",
+            total: 0
         })
-        
+
         const { order_products } = order;
+
+        const precos = order_products.map(product => product.preco * product.quantidade)
+
+        let totalCompra = 0;
+
+        for (let i = 0; i < precos.length; i++) {
+            totalCompra = totalCompra + precos[i];
+        }
+        
+        order.total = totalCompra;
+
+        ordersRepository.save(order);
 
         const updatedProductQuantity = order_products.map(product => ({
             id: product.product_id,

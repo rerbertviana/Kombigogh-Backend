@@ -1,6 +1,6 @@
 import ProductsRepository from "@modules/products/typeorm/repositories/ProductsRepository";
 import AppError from "@shared/errors/AppError";
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, UsingJoinTableIsNotAllowedError } from "typeorm";
 import OrdersRepository from "../typeorm/repositories/OrdersRepository";
 
 interface Irequest {

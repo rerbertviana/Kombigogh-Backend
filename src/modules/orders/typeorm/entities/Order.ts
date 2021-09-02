@@ -30,6 +30,9 @@ class Order {
     @Column()
     status: string;
 
+    @Column("float8")
+    total: number;
+
     @OneToMany(() => OrdersProducts, order_products => order_products.order, {
         cascade: true,
     })
