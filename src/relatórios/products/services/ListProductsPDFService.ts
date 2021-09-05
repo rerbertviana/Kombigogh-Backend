@@ -1,14 +1,11 @@
 import { Request, Response } from "express";
 import PDFPrinter from "pdfmake";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
-import { getCustomRepository } from "typeorm";
-import ProductsRepository from "@modules/products/typeorm/repositories/ProductsRepository";
 import ListProductService from "@modules/products/services/ListProductService";
 
 
 
-
-export default class ProductPDFService {
+export default class ListProductsPDFService {
 
 
     public async pdf(request: Request, response: Response): Promise<void> {
@@ -16,6 +13,16 @@ export default class ProductPDFService {
         const listProducts = new ListProductService();
 
         const products = await listProducts.execute();
+
+        const productsLength = products.length;
+
+        const totalProduct = products.map(product => product.preco * product.quantidade);
+
+        let total = 0;
+        
+        for (let i = 0; i < totalProduct.length; i++) {
+            total = total + totalProduct[i];
+        }
 
         var fonts = {
             Helvetica: {
@@ -33,18 +40,42 @@ export default class ProductPDFService {
 
         for await (let product of products) {
             const rows = new Array();
-            rows.push(product.id);
             rows.push(product.nome);
             rows.push(product.descricao);
             rows.push(`R$ ${product.preco}`);
             rows.push(product.quantidade);
-
+            
             body.push(rows);
         }
 
+        // Obtém a data/hora atual
+        var data = new Date();
 
+        // Guarda cada pedaço em uma variável
+        var dia = data.getDate();           // 1-31
+        var dia_sem = data.getDay();            // 0-6 (zero=domingo)
+        var mes = data.getMonth();          // 0-11 (zero=janeiro)
+        var ano4 = data.getFullYear();       // 4 dígitos
+        var hora = data.getHours();          // 0-23
+        var min = data.getMinutes();        // 0-59
+        var seg = data.getSeconds();        // 0-59
+        var mseg = data.getMilliseconds();   // 0-999
+        var tz = data.getTimezoneOffset(); // em minutos
 
-
+        // Formata a data e a hora (note o mês + 1)
+        if (dia < 10 && mes < 10) {
+            var str_data = "0" + dia + '/' + "0" + (mes + 1) + '/' + ano4;
+        }
+        else {
+            if (dia < 10) 
+                var str_data = "0" + dia + '/' + (mes + 1) + '/' + ano4;
+            
+            else (mes > 10) 
+                var str_data =  dia + '/' + "0" + (mes + 1) + '/' + ano4;
+            
+        }
+        
+        var str_hora = hora + ':' + min + ':' + seg;
 
         const docDefinitions: TDocumentDefinitions = {
             defaultStyle: { font: "Helvetica" },
@@ -60,47 +91,51 @@ export default class ProductPDFService {
                 // you can apply any logic and return any valid pdfmake element
 
                 return [
-                    { text: '\nsimple text', alignment: (currentPage % 2) ? 'left' : 'right', style: "head" },
+                    { text: '\nData:' + ` ${str_data} as ${str_hora}`, alignment: (currentPage % 2) ? 'left' : 'right', style: "head" },
                     { canvas: [{ type: 'rect', x: 170, y: 32, w: pageSize.width - 170, h: 40 }] }
                 ]
             },
             
             content: [
 
-                { text: "Relatório de Produtos\n\n", style: "header" },
+                { text: "\nRELATÓRIO DE PRODUTOS\n\n", style: "header" },
                 
                 {
                     table: {
+
                         heights: function (row) {
                             return 20;
                         },
+
+                        widths: [ '*', 125, 125, '*' ],
+
                         body: [
                             
                             [
-                                { text: "ID", style: "columnsTitle" },
-                                { text: "Nome", style: "columnsTitle" },
+                                { text: "Nome", style: "columnsTitle"},
                                 { text: "Descrição", style: "columnsTitle" },
                                 { text: "Preço", style: "columnsTitle" },
-                                { text: "Quantidade", style: "columnsTitle" },
+                                { text: "Quantidade", style: "columnsTitle"},
                             ],
                             ...body,
                         ]
                     },
                 },
-                { text: "\n\nData", style: "foot"},
+                { text: `\nTOTAL: R$ ${total}. `, style: "total" },
+                { text: `\n${productsLength} registro(s) encontrados.`}
             ],
             styles: {
                 header: {
                     fontSize: 18,
                     bold: true,
-                    alignment: "center"
+                    alignment: "center",
                 },
                 columnsTitle: {
                     fontSize: 15,
                     bold: true,
                     fillColor: "#82D4D1",
                     color: "#FFF",
-                    alignment: "center"
+                    alignment: "left",
                 },
                 foot: {
                     alignment: "right",
@@ -108,6 +143,9 @@ export default class ProductPDFService {
                 },
                 head: {
                     margin: 15,
+                },
+                total: {
+                    bold: true,  
                 }
             }
         };

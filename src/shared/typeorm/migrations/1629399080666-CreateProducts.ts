@@ -34,6 +34,7 @@ export class CreateProducts1629399080666 implements MigrationInterface {
                     {
                         name: 'quantidade',
                         type: 'int',
+                        isNullable: true,
                     },
                     {
                         name: 'user_id',

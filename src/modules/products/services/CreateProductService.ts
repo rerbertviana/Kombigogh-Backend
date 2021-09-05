@@ -26,10 +26,13 @@ class CreateProductService {
         const usersRepository = getCustomRepository(UsersRepository);
         const users = await usersRepository.findById(user_id);
 
+      
+
 
         if (products) {
             throw new AppError('Já existe um produto cadastrado com mesmo nome.');
         }
+
         
 
         const product = productsRepository.create({
