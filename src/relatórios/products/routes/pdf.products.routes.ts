@@ -11,7 +11,7 @@ const listProductsPDF = new ListProductsPDFService();
 const listProductsUserPDF = new ListProductsUserPDFService();
 const listProductsCategoryPDF = new ListProductsCategoryPDFService();
 const listProductsUserCategoryPDF = new ListProductsUserCategoryPDFService();
-const testService = new TestService();
+const test = new TestService();
 
 
 
@@ -24,7 +24,7 @@ pdfProductRouter.get(
             user_id: Joi.string().uuid().required(),
         },
     }),
-    listProductsUserPDF.pdf
+    test.pdf
 );
 
 pdfProductRouter.get(
