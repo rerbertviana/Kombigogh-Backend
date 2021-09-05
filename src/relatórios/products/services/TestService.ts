@@ -79,8 +79,6 @@ export default class TestService{
             quantidade: product.quanti,
             }));
     
-       
-        
 
         // teste[0].producteste
 
