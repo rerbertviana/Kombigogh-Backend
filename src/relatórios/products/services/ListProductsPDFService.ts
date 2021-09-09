@@ -10,6 +10,8 @@ export default class ListProductsPDFService {
 
     public async pdf(request: Request, response: Response): Promise<void> {
 
+        // processo para pegar o valor total dos produtos
+        
         const listProducts = new ListProductService();
 
         const products = await listProducts.execute();
@@ -24,6 +26,7 @@ export default class ListProductsPDFService {
             total = total + totalProduct[i];
         }
 
+        // fontes para serem usadas no relatório
         var fonts = {
             Helvetica: {
                 normal: 'Helvetica',
@@ -33,11 +36,14 @@ export default class ListProductsPDFService {
             },
         };
 
+        // diretivas do PDFMaker
+
         const printer = new PDFPrinter(fonts);
 
         const body: any[] = [];
 
-
+        
+        // criando um array que contenha os valores de products
         for await (let product of products) {
             const rows = new Array();
             rows.push(product.nome);
@@ -77,16 +83,20 @@ export default class ListProductsPDFService {
         
         var str_hora = hora + ':' + min + ':' + seg;
 
+        // definir o docdefinitions - definições do documento pdf - fonte, tamanho da pagina, etc
+
         const docDefinitions: TDocumentDefinitions = {
             defaultStyle: { font: "Helvetica" },
 
             pageSize: 'A4',
 
+            // rotinas para paginação
             footer: function (currentPage, pageCount) {
                 return [
                     { text: currentPage.toString() + ' de ' + pageCount, style: "foot"}   
                 ]
             },
+            // rotinas para o cabeçalho
             header: function (currentPage, pageCount, pageSize) {
                 // you can apply any logic and return any valid pdfmake element
 
@@ -95,7 +105,7 @@ export default class ListProductsPDFService {
                     { canvas: [{ type: 'rect', x: 170, y: 32, w: pageSize.width - 170, h: 40 }] }
                 ]
             },
-            
+            // conteudo do relatório
             content: [
 
                 { text: "\nRELATÓRIO DE PRODUTOS\n\n", style: "header" },
@@ -149,6 +159,8 @@ export default class ListProductsPDFService {
                 }
             }
         };
+
+        // processo abaixo do PdfMaker
 
         const pdfDoc = printer.createPdfKitDocument(docDefinitions);
 

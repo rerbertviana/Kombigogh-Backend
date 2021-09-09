@@ -13,6 +13,7 @@ import ordersUsersRouter from '@modules/users/routes/orders.users.routes';
 import pdfProductRouter from 'src/relatórios/products/routes/pdf.products.routes';
 import pdfUserRouter from 'src/relatórios/users/routes/pdf.users.routes';
 import pdfOrderRouter from 'src/relatórios/orders/routes/pdf.orders.routes';
+import pdfOrdersproductsRouter from 'src/relatórios/orders_products/routes/pdf.ordersproducts.routes';
 
 
 
@@ -33,7 +34,7 @@ routes.use('/orders', ordersRouter);
 routes.use('/pdf/products', pdfProductRouter);
 routes.use('/pdf/users', pdfUserRouter);
 routes.use('/pdf/orders', pdfOrderRouter);
-
+routes.use('/pdf/ordersproducts', pdfOrdersproductsRouter);
 
 
 
