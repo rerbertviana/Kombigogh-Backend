@@ -31,10 +31,10 @@ routes.use('/usersproducts', productsUsersRouter);
 routes.use('/usersorders', ordersUsersRouter);
 routes.use('/categoriesproducts', productsCategoriesRouter);
 routes.use('/orders', ordersRouter);
-routes.use('/pdf/products', pdfProductRouter);
-routes.use('/pdf/users', pdfUserRouter);
-routes.use('/pdf/orders', pdfOrderRouter);
-routes.use('/pdf/ordersproducts', pdfOrdersproductsRouter);
+routes.use('/pdfproducts', pdfProductRouter);
+routes.use('/pdfusers', pdfUserRouter);
+routes.use('/pdforders', pdfOrderRouter);
+routes.use('/pdfordersproducts', pdfOrdersproductsRouter);
 
 
 

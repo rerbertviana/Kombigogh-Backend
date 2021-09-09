@@ -18,13 +18,64 @@ export default class TestService{
 
     public async pdf(request: Request, response: Response): Promise<void>{
 
-        const { user_id } = request.params;
+        const { user_id, mes, ano } = request.params;
+
+        // converter os valores recebidos em inteiros
+        const orderMes = parseInt(mes);
+        const orderAno = parseInt(ano);
+
+
+        var mesPDF = "oi";
+
+        switch (orderMes) {
+            case 0:
+                mesPDF = "Janeiro";
+                break;
+            case 1:
+                mesPDF = "Fevereiro";
+                break;
+            case 2:
+                mesPDF = "Março";
+                break;
+            case 3:
+                mesPDF = "Abril";
+                break;
+            case 4:
+                mesPDF = "Maio";
+                break;
+            case 5:
+                mesPDF = "Junho";
+                break;
+            case 6:
+                mesPDF = "Julho";
+                break;
+            case 7:
+                mesPDF = "Agosto";
+                break;
+            case 8:
+                mesPDF = "Setembro";
+                break;
+            case 9:
+                mesPDF = "Outubro";
+                break;
+            case 10:
+                mesPDF = "Novembro";
+                break;
+            case 11:
+                mesPDF = "Dezembro";
+                break;
+        }
+
 
         const listproducts = new ListProductUserService();
         const ordersRepository = getCustomRepository(OrdersRepository);
         
        // Gerar todos os pedidos 
         const orders = await ordersRepository.find();
+
+        // filtrar os pedidos pela datas
+        const ordersData = orders.filter(order => getMonth(order.created_at) === orderMes && getYear(order.created_at) === orderAno);
+        
  
         // Listar todos os produtos por id do usuário com os dados do usuario.
         const listproductsUser = await listproducts.execute({ user_id });
@@ -37,20 +88,18 @@ export default class TestService{
            
         // Setar array com qualquer tipagem.
         const teste: any[] = [];
-
        
-
         // Uma lista com apenas os ids dos pedidos
-        const ordersIds = orders.map(order => order.id)
-
+        const ordersIds = ordersData.map(order => order.id)
+        
+        
         // Laço para verificar quais produtos do usuario batem com os pedidos
-        for (let i = 0; i < orders.length; i++){
+        for (let i = 0; i < ordersData.length; i++){
 
             // Selecionando o pedido especifico do array de pedidos 
             const order = await ordersRepository.findById(ordersIds[i]);
             // Setar a tabela pivô em order2
             const order2 = order?.order_products;
-
             // Condição de existência
             if (order2 && productsIds) {
                 // for para varrer todos os ids dos produtos existentes em pedidos
@@ -70,6 +119,7 @@ export default class TestService{
                     }         
                 }
             }
+
         }
 
         // processo abaixo vai ser feito para pegar o nome do produto
@@ -95,8 +145,6 @@ export default class TestService{
             pedido: product.orderId
             }));
     
-        // console.log(getYear(orders[0].created_at));
-        // console.log(orders[0].created_at);
 
         const totalProduct = teste.map(product => product.quanti * product.orderPreco);
 
@@ -107,11 +155,9 @@ export default class TestService{
                 total = total + totalProduct[i];
             }
         }
-
-
-
-        console.log(totalProduct);
-       
+        
+        console.log(mesPDF);
+    
 
     }
 

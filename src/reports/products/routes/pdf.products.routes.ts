@@ -24,7 +24,7 @@ pdfProductRouter.get(
             user_id: Joi.string().uuid().required(),
         },
     }),
-    listProductsUserPDF.pdf
+    test.pdf
 );
 
 pdfProductRouter.get(
