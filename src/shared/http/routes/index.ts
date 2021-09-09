@@ -10,10 +10,10 @@ import productsUsersRouter from '@modules/users/routes/products.users.routes';
 import productsCategoriesRouter from '@modules/categories/routes/products.categories.routes';
 import ordersRouter from '@modules/orders/routes/orders.routes';
 import ordersUsersRouter from '@modules/users/routes/orders.users.routes';
-import pdfProductRouter from 'src/relatórios/products/routes/pdf.products.routes';
-import pdfUserRouter from 'src/relatórios/users/routes/pdf.users.routes';
-import pdfOrderRouter from 'src/relatórios/orders/routes/pdf.orders.routes';
-import pdfOrdersproductsRouter from 'src/relatórios/orders_products/routes/pdf.ordersproducts.routes';
+import pdfProductRouter from 'src/reports/products/routes/pdf.products.routes';
+import pdfUserRouter from 'src/reports/users/routes/pdf.users.routes';
+import pdfOrderRouter from 'src/reports/orders/routes/pdf.orders.routes';
+import pdfOrdersproductsRouter from 'src/reports/orders_products/routes/pdf.ordersproducts.routes';
 
 
 
