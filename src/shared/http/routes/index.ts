@@ -14,6 +14,7 @@ import pdfProductRouter from 'src/reports/products/routes/pdf.products.routes';
 import pdfUserRouter from 'src/reports/users/routes/pdf.users.routes';
 import pdfOrderRouter from 'src/reports/orders/routes/pdf.orders.routes';
 import pdfOrdersproductsRouter from 'src/reports/orders_products/routes/pdf.ordersproducts.routes';
+import ordersproductsUsersRouter from '@modules/users/routes/ordersproducts.users.routes';
 
 
 
@@ -29,12 +30,14 @@ routes.use('/products', productsRouter);
 routes.use('/productsprofile', productsProfileRouter);
 routes.use('/usersproducts', productsUsersRouter);
 routes.use('/usersorders', ordersUsersRouter);
+routes.use('/usersordersproducts', ordersproductsUsersRouter);
 routes.use('/categoriesproducts', productsCategoriesRouter);
 routes.use('/orders', ordersRouter);
 routes.use('/pdfproducts', pdfProductRouter);
 routes.use('/pdfusers', pdfUserRouter);
 routes.use('/pdforders', pdfOrderRouter);
 routes.use('/pdfordersproducts', pdfOrdersproductsRouter);
+
 
 
 

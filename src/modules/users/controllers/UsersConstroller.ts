@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import CreateUserService from "../services/CreateUserService";
 import DeleteUserService from "../services/DeleteUserService";
+import ListOrdersproductsDataService from "../services/ListOrdersproductsDataService";
+import ListOrdersproductsService from "../services/ListOrdersproductsService";
 import ListOrderUserService from "../services/ListOrderUserService";
 import ListProductUserService from "../services/ListProductUserService";
 import ListUserService from "../services/ListUserService";
@@ -66,6 +68,33 @@ export default class UsersController {
 
         return response.json(users);
     }
+
+
+    public async ordersproducts(request: Request, response: Response): Promise<Response> {
+
+        const user_id = request.user.id;
+
+        const listordersproducts = new ListOrdersproductsService();
+
+        const ordersproducts = await listordersproducts.execute({ user_id });
+
+        return response.json(ordersproducts);
+    }
+
+    public async ordersproductsdata(request: Request, response: Response): Promise<Response> {
+
+        const { mes, ano } = request.params;
+
+        const user_id = request.user.id;
+
+        const listordersproductsdata = new ListOrdersproductsDataService();
+
+        const ordersproducts = await listordersproductsdata.execute({ user_id, mes, ano });
+
+        return response.json(ordersproducts);
+    }
+
+
 
 
 }
