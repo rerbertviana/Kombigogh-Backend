@@ -10,7 +10,7 @@ const ListOrdersproductsUserPDF = new ListOrdersproductsUserPDFService();
 const ListOrdersproductsUserDatePDF = new ListOrdersproductsUserDatePDFService();
 const test = new TestService();
 
-
+pdfOrdersproductsRouter.get('/', test.pdf)
 
 pdfOrdersproductsRouter.get(
     '/:user_id',
@@ -33,5 +33,7 @@ pdfOrdersproductsRouter.get(
     }),
     ListOrdersproductsUserDatePDF.pdf
 );
+
+
 
 export default pdfOrdersproductsRouter;

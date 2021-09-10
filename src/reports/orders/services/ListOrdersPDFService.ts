@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import PDFPrinter from "pdfmake";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
-import ListUserService from "@modules/users/services/ListUserService";
 import ListOrderService from "@modules/orders/services/ListOrderService";
 
 
