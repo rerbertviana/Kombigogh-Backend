@@ -3,14 +3,15 @@ import { celebrate, Joi, Segments } from 'celebrate';
 import ListOrdersproductsUserPDFService from '../services/ListOrdersproductsUserPDFService';
 import TestService from 'src/reports/products/services/TestService';
 import ListOrdersproductsUserDatePDFService from '../services/ListOrdersproductsUserDatePDFService';
-
+import ListOrdersproductsPDFService from '../services/ListOrdersproductsPDFService';
 
 const pdfOrdersproductsRouter = Router();
 const ListOrdersproductsUserPDF = new ListOrdersproductsUserPDFService();
 const ListOrdersproductsUserDatePDF = new ListOrdersproductsUserDatePDFService();
+const ListOrdersproductsPDF = new ListOrdersproductsPDFService();
 const test = new TestService();
 
-pdfOrdersproductsRouter.get('/', test.pdf)
+pdfOrdersproductsRouter.get('/', ListOrdersproductsPDF.pdf)
 
 pdfOrdersproductsRouter.get(
     '/:user_id',
