@@ -2,8 +2,6 @@ import { Request, Response } from "express";
 import CreateProductService from "../services/CreateProductService";
 import DeleteProductService from "../services/DeleteProductService";
 import ListProductService from "../services/ListProductService";
-import ShowProductService from "../services/ShowProductService";
-
 
 
 export default class ProductsController {

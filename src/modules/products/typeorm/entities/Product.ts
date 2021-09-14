@@ -2,6 +2,7 @@ import Category from '../../../categories/typeorm/entities/Category';
 import User from '../../../users/typeorm/entities/User';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import OrdersProducts from '../../../orders/typeorm/entities/OrdersProducts';
+import { Expose } from 'class-transformer';
 
 
 @Entity('products')
@@ -46,6 +47,14 @@ class Product {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    @Expose({ name: 'imagem_url' })
+    getAvatarUrl(): string | null {
+        if (!this.imagem) {
+            return null;
+        }
+        return `${process.env.APP_API_URL}/files/${this.imagem}`;
+    }
 }
 
 export default Product;
