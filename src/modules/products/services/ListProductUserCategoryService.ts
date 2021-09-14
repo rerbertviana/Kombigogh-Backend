@@ -1,6 +1,5 @@
 import ListProductCategoryService from "@modules/categories/services/ListProductCategoryService";
 import ListProductUserService from "@modules/users/services/ListProductUserService";
-import RedisCache from '@shared/cache/RedisCache';
 
 interface IRequest {
     
@@ -30,30 +29,17 @@ class ListProductUserCategoryService {
         // verificar se existe produto de acordo com a categoria
         const ExistCategoryProduct = allProductsUser?.map(product => product.category_id === category_id);
 
-
-        const redisCache = new RedisCache();
-
-        let productscache = await redisCache.recover<any[]>('api-kombigogh-PRODUCT_LIST_USER_CATEGORY',);
-
         const products: any[] = [];
-
-
-        if (!productscache) {
-           
-            //setar em products os produtos que tem a categoria de acordo com a entrada
-            if (ExistCategoryProduct && allProductsUser) {
-                for (let i = 0; i < ExistCategoryProduct.length; i++) {
-                    if (ExistCategoryProduct[i] == true) {
-                        products.push(allProductsUser[i]);
-                    }
+        
+        //setar em products os produtos que tem a categoria de acordo com a entrada
+        if (ExistCategoryProduct && allProductsUser) {
+            for (let i = 0; i < ExistCategoryProduct.length; i++) {
+                if (ExistCategoryProduct[i] == true) {
+                    products.push(allProductsUser[i]);
                 }
             }
-            productscache = products;
-            await redisCache.save('api-kombigogh-PRODUCT_LIST_USER_CATEGORY', productscache);
         }
-        
-      
-
+           
         return products;
     }
 }
