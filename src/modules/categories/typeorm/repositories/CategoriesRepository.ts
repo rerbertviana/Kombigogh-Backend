@@ -16,7 +16,7 @@ export class CategoriesRepository extends Repository<Category> {
         const users = await this.findOne(category_id, {
             relations: ['product'],
         });
-
+        
         return users;
     }
 

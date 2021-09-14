@@ -11,17 +11,20 @@ export default class ListProductsUserPDFService {
 
         const { user_id } = request.params;
 
+        // listar produtos por usuario
         const listproducts = new ListProductUserService();
-
         const listproductsUser = await listproducts.execute({ user_id });
 
+        // pegar o nome do artista
         const nomeArtista = listproductsUser?.nome;
 
+        // setar apenas o array de produtos 
         const products = listproductsUser?.product;
 
+        //verificar tamanho do array
         const productsLength = products?.length;
         
-
+        // procedimentos para pegar o valor total dos produtos
         const totalProduct = products?.map(product => product.preco * product.quantidade);
 
         let total = 0;

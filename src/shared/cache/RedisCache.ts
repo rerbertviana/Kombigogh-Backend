@@ -13,7 +13,7 @@ export default class RedisCache {
         await this.client.set(key, JSON.stringify(value));
     }
 
-    public async recover<T>(key: string): Promise<T | null> {
+    public async recover<T>(key: string): Promise<T | null | undefined> {
         const data = await this.client.get(key);
 
         if (!data) {

@@ -11,17 +11,20 @@ export default class ListProductsCategoryPDFService {
 
         const { category_id } = request.params;
 
+        // listar os produtos por categoria
         const listproducts = new ListProductCategoryService();
-
         const listproductsCategory = await listproducts.execute({ category_id });
 
+        // setar apenas os arrays de produtos 
         const products = listproductsCategory?.product;
 
+        // verificando tamanho do array
         const productsLength = products?.length;
 
+        // pegando o nome da categoria
         const nomeCategory = listproductsCategory?.nome;
 
-
+        // contabilizar o valor total dos produtos
         const totalProduct = products?.map(product => product.preco * product.quantidade);
 
         let total = 0;
@@ -31,6 +34,8 @@ export default class ListProductsCategoryPDFService {
                 total = total + totalProduct[i];
             }
         }
+        
+        // processo para converter e apresentar os dados em pdf
 
         var fonts = {
             Helvetica: {
