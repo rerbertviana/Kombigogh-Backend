@@ -1,6 +1,7 @@
 import Product from '../../../products/typeorm/entities/Product';
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import Order from '../../../orders/typeorm/entities/Order';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity('users')
 class User {
@@ -14,6 +15,7 @@ class User {
     email: string;
 
     @Column()
+    @Exclude()
     senha: string;
 
     @Column()
@@ -38,6 +40,14 @@ class User {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    @Expose({ name: 'avatar_url' })
+    getAvatarUrl(): string | null {
+        if (!this.avatar) {
+            return null;
+        }
+        return `${process.env.APP_API_URL}/files/${this.avatar}`;
+    }
 }
 
 export default User;

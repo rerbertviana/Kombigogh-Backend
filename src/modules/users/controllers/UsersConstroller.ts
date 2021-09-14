@@ -6,6 +6,7 @@ import ListOrdersproductsService from "../services/ListOrdersproductsService";
 import ListOrderUserService from "../services/ListOrderUserService";
 import ListProductUserService from "../services/ListProductUserService";
 import ListUserService from "../services/ListUserService";
+import { classToClass } from 'class-transformer';
 
 
 
@@ -17,7 +18,7 @@ export default class UsersController {
 
         const users = await listusers.execute();
 
-        return response.json(users);
+        return response.json(classToClass(users));
     }
 
     public async create(request: Request, response: Response): Promise<Response> {
@@ -33,7 +34,7 @@ export default class UsersController {
             telefone
         });
 
-        return response.json(user);
+        return response.json(classToClass(user));
     }
 
     public async delete(request: Request, response: Response): Promise<Response> {
@@ -54,7 +55,7 @@ export default class UsersController {
 
         const users = await listprodcuts.execute({ user_id });
 
-        return response.json(users);
+        return response.json(classToClass(users));
     }
 
 
@@ -66,7 +67,7 @@ export default class UsersController {
 
         const users = await listorders.execute({ user_id });
 
-        return response.json(users);
+        return response.json(classToClass(users));
     }
 
 
