@@ -122,7 +122,7 @@ export default class ListOrdersPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${ordersLength} registro(s) encontrados.` },
+                { text: `\n${ordersLength} registro(s) encontrado(s).` },
             ],
             styles: {
                 header: {

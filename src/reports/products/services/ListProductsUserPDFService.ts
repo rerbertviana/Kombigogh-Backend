@@ -110,7 +110,8 @@ export default class ListProductsUserPDFService {
 
             content: [
 
-                { text: `\nRELATÓRIO DE PRODUTOS\n Artista: ${nomeArtista}\n\n`, style: "header" },
+                { text: '\nRELATÓRIO DE PRODUTOS\n', style:"header" },
+                { text: `Artista: ${nomeArtista} \n\n`, style: "sub" },
 
                 {
                     table: {
@@ -119,7 +120,7 @@ export default class ListProductsUserPDFService {
                             return 20;
                         },
 
-                        widths: ['*', 125, 125, '*'],
+                        widths: ['*', 200, 125, '*'],
 
                         body: [
 
@@ -134,9 +135,13 @@ export default class ListProductsUserPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${productsLength} registro(s) encontrados.` }
+                { text: `\n${productsLength} registro(s) encontrado(s).` }
             ],
             styles: {
+                sub: {
+                    fontSize: 15,
+                    alignment: "center",
+                },
                 header: {
                     fontSize: 18,
                     bold: true,

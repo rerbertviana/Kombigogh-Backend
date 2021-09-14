@@ -115,7 +115,8 @@ export default class ListOrdersUserPDFService {
 
             content: [
 
-                { text: `\nRELATÓRIO DE PEDIDOS\nArtista: ${userName}\n\n`, style: "header" },
+                { text: '\nRELATÓRIO DE PEDIDOS\n', style: "header" },
+                { text: `Artista: ${ userName }\n\n`, style:"sub"},
 
                 {
                     table: {
@@ -139,9 +140,13 @@ export default class ListOrdersUserPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${ordersUser?.length} registro(s) encontrados.` },
+                { text: `\n${ordersUser?.length} registro(s) encontrado(s).` },
             ],
             styles: {
+                sub: {
+                    fontSize: 15,
+                    alignment: "center",
+                },
                 header: {
                     fontSize: 18,
                     bold: true,

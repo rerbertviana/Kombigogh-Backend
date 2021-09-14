@@ -228,7 +228,8 @@ export default class ListOrdersproductsUserDatePDFService {
 
             content: [
 
-                { text: `\nRELATÓRIO DE VENDAS\nArtista: ${nomeUser}\n`, style: "header" },
+                { text: '\nRELATÓRIO DE VENDAS\n', style: "header" },
+                { text: `Artista: ${nomeUser}`, style: "sub2"},
                 { text: `Mês: ${mesPDF} - Ano: ${orderAno}\n\n`, style: "sub"},
 
                 {
@@ -252,9 +253,13 @@ export default class ListOrdersproductsUserDatePDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${resul.length} registro(s) encontrados.` }
+                { text: `\n${resul.length} registro(s) encontrado(s).` }
             ],
             styles: {
+                sub2: {
+                    fontSize: 15,
+                    alignment: "center",
+                },
                 sub: {
                     fontSize: 12,
                 },

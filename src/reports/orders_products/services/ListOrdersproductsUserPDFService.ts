@@ -176,7 +176,8 @@ export default class ListOrdersproductsUserPDFService {
 
             content: [
 
-                { text: `\nRELATÓRIO DE VENDAS\nArtista: ${nomeUser} \n\n`, style: "header" },
+                { text: '\nRELATÓRIO DE VENDAS', style: "header" },
+                { text: `Artista: ${nomeUser}\n\n`, style: "sub" },
 
                 {
                     table: {
@@ -199,9 +200,13 @@ export default class ListOrdersproductsUserPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${resul.length} registro(s) encontrados.` }
+                { text: `\n${resul.length} registro(s) encontrado(s).` }
             ],
             styles: {
+                sub: {
+                    fontSize: 15,
+                    alignment: "center",
+                },
                 header: {
                     fontSize: 18,
                     bold: true,

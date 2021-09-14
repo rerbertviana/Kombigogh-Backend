@@ -4,6 +4,7 @@ import { TDocumentDefinitions } from "pdfmake/interfaces";
 import ListOrderService from '@modules/orders/services/ListOrderService';
 import ShowOrderService from '@modules/orders/services/ShowOrderService';
 import ListProductService from '@modules/products/services/ListProductService';
+import ListUserService from '@modules/users/services/ListUserService';
 
 export default class ListOrdersproductsPDFService {
 
@@ -49,6 +50,10 @@ export default class ListOrdersproductsPDFService {
         //listar todos os produtos
         const products = await listproducts.execute();
 
+        //listar todos os usuarios
+        const listusers = new ListUserService();
+        const users = await listusers.execute();
+
 
         const resul: any[] = [];
 
@@ -59,6 +64,7 @@ export default class ListOrdersproductsPDFService {
             resul.push(
                 ordersproducts.map(order => ({
                     order_id: order[i].order_id,
+                    artista: users.filter(u => u.id === (products.filter(p => p.id === order[i].product_id)[0].user_id))[0].nome,
                     produto: products.filter(p => p.id === order[i].product_id)[0].nome,
                     preco: order[i].preco,
                     quantidade: order[i].quantidade
@@ -75,6 +81,7 @@ export default class ListOrdersproductsPDFService {
             for await (let product of resul[i]) {
                 const rows = new Array();
                 rows.push(product.order_id);
+                rows.push(product.artista);
                 rows.push(product.produto);
                 rows.push(product.preco);
                 rows.push(product.quantidade);
@@ -153,12 +160,13 @@ export default class ListOrdersproductsPDFService {
                             return 20;
                         },
 
-                        widths: [250, '*', '*', '*'],
+                        widths: [230, 60, 70, 45, 85],
 
                         body: [
 
                             [
                                 { text: "ID_Pedido", style: "columnsTitle" },
+                                { text: "Artista", style: "columnsTitle" },
                                 { text: "Produto", style: "columnsTitle" },
                                 { text: "Preço", style: "columnsTitle" },
                                 { text: "Quantidade", style: "columnsTitle" },
@@ -168,7 +176,7 @@ export default class ListOrdersproductsPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${body.length} registro(s) encontrados.` }
+                { text: `\n${body.length} registro(s) encontrado(s).` }
             ],
             styles: {
                 header: {

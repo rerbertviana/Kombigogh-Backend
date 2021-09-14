@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import PDFPrinter from "pdfmake";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
-import ListProductUserService from "@modules/users/services/ListProductUserService";
 import ListProductCategoryService from "@modules/categories/services/ListProductCategoryService";
 
 
@@ -111,16 +110,17 @@ export default class ListProductsCategoryPDFService {
 
             content: [
 
-                { text: `\nRELATÓRIO DE PRODUTOS\nCategoria: ${nomeCategory} \n\n`, style: "header" },
+                { text: `\nRELATÓRIO DE PRODUTOS\n`, style: "header" },
+                { text: `Categoria: ${nomeCategory} \n\n`, style: "sub" },
 
                 {
                     table: {
 
                         heights: function (row) {
-                            return 20;
+                            return 30;
                         },
 
-                        widths: ['*', 125, 125, '*'],
+                        widths: ['*', 200, 125, '*'],
 
                         body: [
 
@@ -135,9 +135,13 @@ export default class ListProductsCategoryPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${productsLength} registro(s) encontrados.` }
+                { text: `\n${productsLength} registro(s) encontrado(s).` }
             ],
             styles: {
+                sub: {
+                    fontSize: 15,
+                    alignment: "center",
+                },
                 header: {
                     fontSize: 18,
                     bold: true,

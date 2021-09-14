@@ -11,7 +11,6 @@ const listProductsPDF = new ListProductsPDFService();
 const listProductsUserPDF = new ListProductsUserPDFService();
 const listProductsCategoryPDF = new ListProductsCategoryPDFService();
 const listProductsUserCategoryPDF = new ListProductsUserCategoryPDFService();
-const test = new TestService();
 
 
 

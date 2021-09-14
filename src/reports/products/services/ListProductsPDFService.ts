@@ -114,10 +114,10 @@ export default class ListProductsPDFService {
                     table: {
 
                         heights: function (row) {
-                            return 20;
+                            return 30;
                         },
 
-                        widths: [ '*', 125, 125, '*' ],
+                        widths: [ '*', 200, 125, '*' ],
 
                         body: [
                             
@@ -132,7 +132,7 @@ export default class ListProductsPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${productsLength} registro(s) encontrados.`}
+                { text: `\n${productsLength} registro(s) encontrado(s).`}
             ],
             styles: {
                 header: {

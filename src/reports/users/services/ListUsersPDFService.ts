@@ -111,7 +111,7 @@ export default class ListUsersPDFService {
                         ]
                     },
                 },
-                { text: `\n${usersLength} registros encontrados.` },
+                { text: `\n${usersLength} registro(s) encontrado(s).` },
             ],
             styles: {
                 header: {
