@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import CreateOrderService from '../services/CreateOrderService';
-import DisableOrderService from '../services/ReverseOrderService';
-import DeleteOrderService from '../services/ReverseOrderService';
 import ListOrderService from '../services/ListOrderService';
 import ShowOrderService from '../services/ShowOrderService';
 import ReverseOrderService from '../services/ReverseOrderService';
 import ListOrdersDataService from '../services/ListOrdersDataService';
 import ListOrdersStatusService from '../services/ListOrdersStatusService';
 import ListOrderUserService from '@modules/users/services/ListOrderUserService';
+import ListOrdersUserDataService from '../services/ListOrdersUserDataService';
+import ListOrdersUserDataStatusService from '../services/ListOrdersUserDataStatusService';
+import ListOrdersUserStatusService from '../services/ListOrdersUserStatusService';
 
 export default class OrdersController {
     public async show(request: Request, response: Response): Promise<Response> {
@@ -80,6 +81,36 @@ export default class OrdersController {
         const listorders = new ListOrderUserService();
 
         const orders = await listorders.execute({ user_id });
+
+        return response.json(orders);
+    }
+
+    public async orderuserdata(request: Request, response: Response): Promise<Response> {
+        const { user_id, ordermes, ano } = request.params;
+
+        const listorders = new ListOrdersUserDataService();
+
+        const orders = await listorders.execute({ user_id, ordermes, ano });
+
+        return response.json(orders);
+    }
+
+    public async orderuserdatastatus(request: Request, response: Response): Promise<Response> {
+        const { user_id, ordermes, ano, status} = request.params;
+
+        const listorders = new ListOrdersUserDataStatusService();
+
+        const orders = await listorders.execute({ user_id, ordermes, ano, status });
+
+        return response.json(orders);
+    }
+
+    public async orderuserstatus(request: Request, response: Response): Promise<Response> {
+        const { user_id, status } = request.params;
+
+        const listorders = new ListOrdersUserStatusService();
+
+        const orders = await listorders.execute({ user_id, status });
 
         return response.json(orders);
     }

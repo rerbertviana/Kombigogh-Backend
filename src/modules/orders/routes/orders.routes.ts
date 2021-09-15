@@ -41,6 +41,18 @@ ordersRouter.get(
 );
 
 ordersRouter.get(
+    '/user/:user_id/:ordermes/:ano',
+    celebrate({
+        [Segments.PARAMS]: {
+            user_id: Joi.string().uuid().required(),
+            ordermes: Joi.number().required(),
+            ano: Joi.number().required(),
+        },
+    }),
+    ordersController.orderuserdata,
+);
+
+ordersRouter.get(
     '/:mes/:ano',
     celebrate({
         [Segments.PARAMS]: {

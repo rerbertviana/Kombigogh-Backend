@@ -19,6 +19,7 @@ import pdfOrdersproductsRouter2 from 'src/reports/orders_products/routes/pdf.ord
 import pdfOrdersproductsOrderRouter from 'src/reports/orders_products/routes/pdf.ordersproducts.order.routes';
 import pdfOrderStatusRouter from 'src/reports/orders/routes/pdf.orders.status.routes';
 import pdfOrderStatusUserRouter from 'src/reports/orders/routes/pdf.orders.user.status.routes';
+import ordersUserDataStatusRouter from '@modules/orders/routes/orders.user.data.status.routes';
 
 
 
@@ -37,6 +38,7 @@ routes.use('/usersorders', ordersUsersRouter);
 routes.use('/usersordersproducts', ordersproductsUsersRouter);
 routes.use('/categoriesproducts', productsCategoriesRouter);
 routes.use('/orders', ordersRouter);
+routes.use('/ordersuserdatastatus', ordersUserDataStatusRouter);
 routes.use('/pdfproducts', pdfProductRouter);
 routes.use('/pdfusers', pdfUserRouter);
 routes.use('/pdforders', pdfOrderRouter);
@@ -47,8 +49,11 @@ routes.use('/pdfordersstatususer', pdfOrderStatusUserRouter);
 
 
 
+
 routes.get('/', (request, response) => {
     return response.json({ message: 'Testando!' });
 })
+
+
 
 export default routes;
