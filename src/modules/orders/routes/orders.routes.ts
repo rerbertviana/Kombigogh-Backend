@@ -20,6 +20,17 @@ ordersRouter.get(
     ordersController.show,
 );
 
+ordersRouter.get(
+    '/:mes/:ano',
+    celebrate({
+        [Segments.PARAMS]: {
+            mes: Joi.number().required(),
+            ano: Joi.number().required(),
+        },
+    }),
+    ordersController.ordersdata,
+);
+
 ordersRouter.post(
     '/',
     celebrate({

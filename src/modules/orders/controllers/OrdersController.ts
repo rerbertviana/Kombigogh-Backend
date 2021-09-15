@@ -5,6 +5,7 @@ import DeleteOrderService from '../services/ReverseOrderService';
 import ListOrderService from '../services/ListOrderService';
 import ShowOrderService from '../services/ShowOrderService';
 import ReverseOrderService from '../services/ReverseOrderService';
+import ListOrdersDataService from '../services/ListOrdersDataService';
 
 export default class OrdersController {
     public async show(request: Request, response: Response): Promise<Response> {
@@ -49,5 +50,15 @@ export default class OrdersController {
         await reverseOrders.execute({ id });
 
         return response.json([]);
+    }
+
+    public async ordersdata(request: Request, response: Response): Promise<Response> {
+        const { mes, ano } = request.params;
+
+        const listOrderData = new ListOrdersDataService();
+
+        const orders = await listOrderData.execute({ mes, ano });
+
+        return response.json(orders);
     }
 }
