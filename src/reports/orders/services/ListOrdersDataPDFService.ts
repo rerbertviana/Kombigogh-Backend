@@ -1,42 +1,80 @@
 import { Request, Response } from "express";
 import PDFPrinter from "pdfmake";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
-import ListOrderUserService from "@modules/users/services/ListOrderUserService";
+import ListOrderService from "@modules/orders/services/ListOrderService";
+import { getMonth, getYear } from 'date-fns';
 
 
-
-export default class ListOrdersUserPDFService {
+export default class ListOrdersDataPDFService {
 
 
     public async pdf(request: Request, response: Response): Promise<void> {
 
-        const { user_id } = request.params;
+        const { ordermes, ano } = request.params;
+
+        // listar todos os pedidos
+        const listorders = new ListOrderService();
+        const orders = await listorders.execute();
+
+        // converter os valores recebidos em inteiros
+        const orderMes = parseInt(ordermes);
+        const orderAno = parseInt(ano);
+
+        // filtrar os pedidos pela datas
+        const ordersData = orders.filter(order => getMonth(order.created_at) === orderMes && getYear(order.created_at) === orderAno);
 
 
-        // pegando pedidos pelo usuario
-        const listOrders = new ListOrderUserService();
-        const orders = await listOrders.execute({ user_id });
+        const ordersLength = ordersData.length;
 
-        // pegando o nome do usuario
-        const userName = orders?.nome;
-
-        // setando apenas os pedidos sem os dados do usuario
-        const ordersUser = orders?.order;
-
-      
-
-        const totalOrders = ordersUser?.map(order => order.total);
+        const totalOrders = ordersData.map(order => order.total);
 
         let total = 0;
 
-        if (totalOrders) {
-
-            for (let i = 0; i < totalOrders.length; i++) {
-                total = total + totalOrders[i];
-            }
-                
+        for (let i = 0; i < totalOrders.length; i++) {
+            total = total + totalOrders[i];
         }
-           
+
+        // apresentar o mês no relatório
+        var mesPDF = "";
+
+        switch (orderMes) {
+            case 0:
+                mesPDF = "Janeiro";
+                break;
+            case 1:
+                mesPDF = "Fevereiro";
+                break;
+            case 2:
+                mesPDF = "Março";
+                break;
+            case 3:
+                mesPDF = "Abril";
+                break;
+            case 4:
+                mesPDF = "Maio";
+                break;
+            case 5:
+                mesPDF = "Junho";
+                break;
+            case 6:
+                mesPDF = "Julho";
+                break;
+            case 7:
+                mesPDF = "Agosto";
+                break;
+            case 8:
+                mesPDF = "Setembro";
+                break;
+            case 9:
+                mesPDF = "Outubro";
+                break;
+            case 10:
+                mesPDF = "Novembro";
+                break;
+            case 11:
+                mesPDF = "Dezembro";
+                break;
+        }
 
         var fonts = {
             Helvetica: {
@@ -52,8 +90,7 @@ export default class ListOrdersUserPDFService {
         const body: any[] = [];
 
 
-        if(ordersUser)
-        for await (let order of ordersUser) {
+        for await (let order of ordersData) {
             const rows = new Array();
             rows.push(order.id);
             rows.push(order.cliente);
@@ -91,7 +128,6 @@ export default class ListOrdersUserPDFService {
         }
 
         var str_hora = hora + ':' + min + ':' + seg;
-        
 
         const docDefinitions: TDocumentDefinitions = {
             defaultStyle: { font: "Helvetica" },
@@ -114,9 +150,8 @@ export default class ListOrdersUserPDFService {
 
             content: [
 
-                { text: '\nRELATÓRIO DE PEDIDOS\n', style: "header" },
-                { text: `Artista: ${ userName }\n\n`, style:"sub"},
-
+                { text: "\nRELATÓRIO DE PEDIDOS\n\n", style: "header" },
+                { text: `Mês: ${mesPDF} - Ano: ${orderAno}\n\n`, style: "sub" },
                 {
                     table: {
 
@@ -139,12 +174,11 @@ export default class ListOrdersUserPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${ordersUser?.length} registro(s) encontrado(s).` },
+                { text: `\n${ordersLength} registro(s) encontrado(s).` },
             ],
             styles: {
                 sub: {
-                    fontSize: 15,
-                    alignment: "center",
+                    fontSize: 12,
                 },
                 header: {
                     fontSize: 18,

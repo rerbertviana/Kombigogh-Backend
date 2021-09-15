@@ -38,6 +38,12 @@ class OrdersRepository extends Repository<Order> {
 
         return order;
     }
+
+    public async findByIdOnly(id: string): Promise<Order | undefined> {
+        const order = await this.findOne(id);
+        
+        return order;
+    }
 }
 
 export default OrdersRepository;

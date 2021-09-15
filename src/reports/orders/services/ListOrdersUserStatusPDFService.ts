@@ -5,12 +5,12 @@ import ListOrderUserService from "@modules/users/services/ListOrderUserService";
 
 
 
-export default class ListOrdersUserPDFService {
+export default class ListOrdersUserStatusPDFService {
 
 
     public async pdf(request: Request, response: Response): Promise<void> {
 
-        const { user_id } = request.params;
+        const { user_id, status } = request.params;
 
 
         // pegando pedidos pelo usuario
@@ -23,9 +23,16 @@ export default class ListOrdersUserPDFService {
         // setando apenas os pedidos sem os dados do usuario
         const ordersUser = orders?.order;
 
-      
+        // filtrar orders pelo status recebido
 
-        const totalOrders = ordersUser?.map(order => order.total);
+        let ordersStatus: any[] = [];
+
+        if (ordersUser) {
+            ordersStatus = ordersUser.filter(order => order.status === status);
+        }
+
+
+        const totalOrders = ordersStatus.map(order => order.total);
 
         let total = 0;
 
@@ -34,9 +41,9 @@ export default class ListOrdersUserPDFService {
             for (let i = 0; i < totalOrders.length; i++) {
                 total = total + totalOrders[i];
             }
-                
+
         }
-           
+
 
         var fonts = {
             Helvetica: {
@@ -52,16 +59,16 @@ export default class ListOrdersUserPDFService {
         const body: any[] = [];
 
 
-        if(ordersUser)
-        for await (let order of ordersUser) {
-            const rows = new Array();
-            rows.push(order.id);
-            rows.push(order.cliente);
-            rows.push(order.status);
-            rows.push(`R$ ${order.total}`);
+        if (ordersStatus)
+            for await (let order of ordersStatus) {
+                const rows = new Array();
+                rows.push(order.id);
+                rows.push(order.cliente);
+                rows.push(order.status);
+                rows.push(`R$ ${order.total}`);
 
-            body.push(rows);
-        }
+                body.push(rows);
+            }
 
         // Obtém a data/hora atual
         var data = new Date();
@@ -91,7 +98,7 @@ export default class ListOrdersUserPDFService {
         }
 
         var str_hora = hora + ':' + min + ':' + seg;
-        
+
 
         const docDefinitions: TDocumentDefinitions = {
             defaultStyle: { font: "Helvetica" },
@@ -115,7 +122,8 @@ export default class ListOrdersUserPDFService {
             content: [
 
                 { text: '\nRELATÓRIO DE PEDIDOS\n', style: "header" },
-                { text: `Artista: ${ userName }\n\n`, style:"sub"},
+                { text: `Artista: ${userName}\n\n`, style: "sub" },
+                { text: `Status: ${status}\n\n`, style: "sub2" },
 
                 {
                     table: {
@@ -139,12 +147,15 @@ export default class ListOrdersUserPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${ordersUser?.length} registro(s) encontrado(s).` },
+                { text: `\n${ordersStatus.length} registro(s) encontrado(s).` },
             ],
             styles: {
                 sub: {
                     fontSize: 15,
                     alignment: "center",
+                },
+                sub2: {
+                    fontSize: 12
                 },
                 header: {
                     fontSize: 18,

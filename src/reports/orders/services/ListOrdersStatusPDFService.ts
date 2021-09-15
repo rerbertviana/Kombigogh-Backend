@@ -1,42 +1,37 @@
 import { Request, Response } from "express";
 import PDFPrinter from "pdfmake";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
-import ListOrderUserService from "@modules/users/services/ListOrderUserService";
+import ListOrderService from "@modules/orders/services/ListOrderService";
+import OrdersRepository from "@modules/orders/typeorm/repositories/OrdersRepository";
+import { getCustomRepository } from "typeorm";
 
 
 
-export default class ListOrdersUserPDFService {
+export default class ListOrdersStatusPDFService {
 
 
     public async pdf(request: Request, response: Response): Promise<void> {
 
-        const { user_id } = request.params;
+        const { status } = request.params;
+
+        //pegar todos os orders
+        const ordersRepository = getCustomRepository(OrdersRepository);
+        const orders = ordersRepository.find();
 
 
-        // pegando pedidos pelo usuario
-        const listOrders = new ListOrderUserService();
-        const orders = await listOrders.execute({ user_id });
+        // filtrar orders pelo status recebido
+        const ordersStatus = (await orders).filter(order => order.status === status);
 
-        // pegando o nome do usuario
-        const userName = orders?.nome;
+    
+        const ordersLength = ordersStatus.length;
 
-        // setando apenas os pedidos sem os dados do usuario
-        const ordersUser = orders?.order;
-
-      
-
-        const totalOrders = ordersUser?.map(order => order.total);
+        const totalOrders = ordersStatus.map(order => order.total);
 
         let total = 0;
 
-        if (totalOrders) {
-
-            for (let i = 0; i < totalOrders.length; i++) {
-                total = total + totalOrders[i];
-            }
-                
+        for (let i = 0; i < totalOrders.length; i++) {
+            total = total + totalOrders[i];
         }
-           
 
         var fonts = {
             Helvetica: {
@@ -52,8 +47,7 @@ export default class ListOrdersUserPDFService {
         const body: any[] = [];
 
 
-        if(ordersUser)
-        for await (let order of ordersUser) {
+        for await (let order of ordersStatus) {
             const rows = new Array();
             rows.push(order.id);
             rows.push(order.cliente);
@@ -91,7 +85,6 @@ export default class ListOrdersUserPDFService {
         }
 
         var str_hora = hora + ':' + min + ':' + seg;
-        
 
         const docDefinitions: TDocumentDefinitions = {
             defaultStyle: { font: "Helvetica" },
@@ -114,8 +107,8 @@ export default class ListOrdersUserPDFService {
 
             content: [
 
-                { text: '\nRELATÓRIO DE PEDIDOS\n', style: "header" },
-                { text: `Artista: ${ userName }\n\n`, style:"sub"},
+                { text: "\nRELATÓRIO DE PEDIDOS\n", style: "header" },
+                { text: `Status = ${status} \n\n`, style: "sub"},
 
                 {
                     table: {
@@ -139,11 +132,11 @@ export default class ListOrdersUserPDFService {
                     },
                 },
                 { text: `\nTOTAL: R$ ${total}. `, style: "total" },
-                { text: `\n${ordersUser?.length} registro(s) encontrado(s).` },
+                { text: `\n${ordersLength} registro(s) encontrado(s).` },
             ],
             styles: {
                 sub: {
-                    fontSize: 15,
+                    fontSize: 14,
                     alignment: "center",
                 },
                 header: {

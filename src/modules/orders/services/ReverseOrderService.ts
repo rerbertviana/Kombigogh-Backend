@@ -1,7 +1,7 @@
 import ProductsRepository from "@modules/products/typeorm/repositories/ProductsRepository";
 import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
-import { getCustomRepository, UsingJoinTableIsNotAllowedError } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import OrdersRepository from "../typeorm/repositories/OrdersRepository";
 
 interface Irequest {
@@ -12,6 +12,14 @@ class ReverseOrderService {
     public async execute({ id }: Irequest): Promise<void> {
 
         const ordersRepository = getCustomRepository(OrdersRepository);
+
+        const orderVerify = await ordersRepository.findByIdOnly(id);
+        
+        if (orderVerify && orderVerify.status == "Estornado") {
+
+            throw new AppError("Esse pedido já foi estornado.");
+            
+        }
 
         const order = await ordersRepository.findById(id);
 

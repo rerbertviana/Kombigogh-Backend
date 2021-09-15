@@ -17,6 +17,8 @@ import pdfOrdersproductsRouter from 'src/reports/orders_products/routes/pdf.orde
 import ordersproductsUsersRouter from '@modules/users/routes/ordersproducts.users.routes';
 import pdfOrdersproductsRouter2 from 'src/reports/orders_products/routes/pdf.ordersproducts.order.routes';
 import pdfOrdersproductsOrderRouter from 'src/reports/orders_products/routes/pdf.ordersproducts.order.routes';
+import pdfOrderStatusRouter from 'src/reports/orders/routes/pdf.orders.status.routes';
+import pdfOrderStatusUserRouter from 'src/reports/orders/routes/pdf.orders.user.status.routes';
 
 
 
@@ -40,7 +42,8 @@ routes.use('/pdfusers', pdfUserRouter);
 routes.use('/pdforders', pdfOrderRouter);
 routes.use('/pdfordersproducts', pdfOrdersproductsRouter);
 routes.use('/pdfordersproductsorder', pdfOrdersproductsOrderRouter);
-
+routes.use('/pdfordersstatus', pdfOrderStatusRouter);
+routes.use('/pdfordersstatususer', pdfOrderStatusUserRouter);
 
 
 
