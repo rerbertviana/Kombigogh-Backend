@@ -6,6 +6,8 @@ import ListOrderService from '../services/ListOrderService';
 import ShowOrderService from '../services/ShowOrderService';
 import ReverseOrderService from '../services/ReverseOrderService';
 import ListOrdersDataService from '../services/ListOrdersDataService';
+import ListOrdersStatusService from '../services/ListOrdersStatusService';
+import ListOrderUserService from '@modules/users/services/ListOrderUserService';
 
 export default class OrdersController {
     public async show(request: Request, response: Response): Promise<Response> {
@@ -58,6 +60,26 @@ export default class OrdersController {
         const listOrderData = new ListOrdersDataService();
 
         const orders = await listOrderData.execute({ mes, ano });
+
+        return response.json(orders);
+    }
+
+    public async ordersstatus(request: Request, response: Response): Promise<Response> {
+        const { status } = request.params;
+
+        const listorders = new ListOrdersStatusService();
+
+        const orders = await listorders.execute({ status });
+
+        return response.json(orders);
+    }
+
+    public async orderuser(request: Request, response: Response): Promise<Response> {
+        const { user_id } = request.params;
+
+        const listorders = new ListOrderUserService();
+
+        const orders = await listorders.execute({ user_id });
 
         return response.json(orders);
     }

@@ -1,5 +1,6 @@
 import ProductRepository from '@modules/products/typeorm/repositories/ProductsRepository';
 import { UsersRepository } from '@modules/users/typeorm/repositories/UsersRepository';
+import RedisCache from '@shared/cache/RedisCache';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Order from '../typeorm/entities/Order';
@@ -97,6 +98,9 @@ class CreateOrderService {
                 existsProducts.filter(p => p.id === product.product_id)[0].quantidade -
                 product.quantidade,
         }));
+
+        const redisCache = new RedisCache();
+        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
 
         await productsRepository.save(updatedProductQuantity);
 

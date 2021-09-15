@@ -1,4 +1,5 @@
 import ProductsRepository from "@modules/products/typeorm/repositories/ProductsRepository";
+import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
 import { getCustomRepository, UsingJoinTableIsNotAllowedError } from "typeorm";
 import OrdersRepository from "../typeorm/repositories/OrdersRepository";
@@ -33,6 +34,9 @@ class ReverseOrderService {
         }));
         
         order.status = "Estornado"
+
+        const redisCache = new RedisCache();
+        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
 
         await productsRepository.save(updatedProductQuantity);
 

@@ -21,6 +21,26 @@ ordersRouter.get(
 );
 
 ordersRouter.get(
+    '/status/:status',
+    celebrate({
+        [Segments.PARAMS]: {
+            status: Joi.string().required(),
+        },
+    }),
+    ordersController.ordersstatus,
+);
+
+ordersRouter.get(
+    '/user/:user_id',
+    celebrate({
+        [Segments.PARAMS]: {
+            user_id: Joi.string().uuid().required(),
+        },
+    }),
+    ordersController.orderuser,
+);
+
+ordersRouter.get(
     '/:mes/:ano',
     celebrate({
         [Segments.PARAMS]: {
