@@ -13,7 +13,7 @@ class ListProductCategoryService {
 
         const productsRepository = getCustomRepository(CategoriesRepository);   
         const products = await productsRepository.findByProducts(category_id);
-
+        
         return products;
     }
 }

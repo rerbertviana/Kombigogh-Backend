@@ -69,7 +69,8 @@ export default class ListOrdersproductsDataService {
                                 producteste: order2[y].product_id,
                                 quanti: order2[y].quantidade,
                                 orderId: order2[y].order_id,
-                                orderPreco: order2[y].preco
+                                orderPreco: order2[y].preco,
+                                ordercreate: order2[y].created_at
                             });
                         }
                     }
@@ -98,6 +99,8 @@ export default class ListOrdersproductsDataService {
             id: product.producteste,
             nome: p.filter(p => p.id === product.producteste)[0].nome,
             quantidade: product.quanti,
+            mes: getMonth(product.ordercreate) + 1,
+            ano: getYear(product.ordercreate)
         }));
 
         return resul;

@@ -3,6 +3,8 @@ import ListProductUserService from '@modules/users/services/ListProductUserServi
 import OrdersRepository from '@modules/orders/typeorm/repositories/OrdersRepository';
 import { getCustomRepository } from 'typeorm';
 import ProductsRepository from '@modules/products/typeorm/repositories/ProductsRepository';
+import { getMonth, getYear } from 'date-fns';
+
 
 interface Irequest {
     user_id: string;
@@ -45,6 +47,9 @@ export default class ListOrdersproductsService {
             // Setar a tabela pivô em order2
             const order2 = order?.order_products;
 
+            //tirar do order2 o created_at
+            // console.log(order2);
+
             // Condição de existência
             if (order2 && productsIds) {
                 // for para varrer todos os ids dos produtos existentes em pedidos
@@ -58,7 +63,8 @@ export default class ListOrdersproductsService {
                                 producteste: order2[y].product_id,
                                 quanti: order2[y].quantidade,
                                 orderId: order2[y].order_id,
-                                orderPreco: order2[y].preco
+                                orderPreco: order2[y].preco,
+                                ordercreate: order2[y].created_at
                             });
                         }
                     }
@@ -87,9 +93,14 @@ export default class ListOrdersproductsService {
             id_produto: product.producteste,
             nome: p.filter(p => p.id === product.producteste)[0].nome,
             quantidade: product.quanti,
+            mes: getMonth(product.ordercreate) + 1,
+            ano: getYear(product.ordercreate)
         }));
 
+
         return resul;
+
+        
 
     }
 
