@@ -81,11 +81,63 @@ export default class ListOrdersproductsService {
         const productsSaleId = productsSale.map(product => product.producteste)
 
         const p: any[] = [];
+        const meses: any[] = [];
 
         //laço para pegar os produtos vendidos 
         for (let k = 0; k < productsSale.length; k++) {
             p.push(await productsRepository.findById(productsSaleId[k]));
         }
+
+        meses.push(
+            {
+                id: 0,
+                nome: 'JANEIRO'
+            },
+            {
+                id: 1,
+                nome: 'FEVEREIRO'
+            },
+            {
+                id: 2,
+                nome: 'MARÇO'
+            },
+            {
+                id: 3,
+                nome: 'ABRIL'
+            },
+            {
+                id: 4,
+                nome: 'MAIO'
+            },
+            {
+                id: 5,
+                nome: 'JUNHO'
+            },
+            {
+                id: 6,
+                nome: 'JULHO'
+            },
+            {
+                id: 7,
+                nome: 'AGOSTO'
+            },
+            {
+                id: 8,
+                nome: 'SETEMBRO'
+            },
+            {
+                id: 9,
+                nome: 'OUTUBRO'
+            },
+            {
+                id: 10,
+                nome: 'NOVEMBRO'
+            },
+            {
+                id: 11,
+                nome: 'DEZEMBRO'
+            },
+        );
 
         // criar um objeto que contenha os dados para ser apresentados no relatório
         const resul = productsSale.map(product => ({
@@ -93,14 +145,11 @@ export default class ListOrdersproductsService {
             id_produto: product.producteste,
             nome: p.filter(p => p.id === product.producteste)[0].nome,
             quantidade: product.quanti,
-            mes: getMonth(product.ordercreate) + 1,
+            mes: meses.filter(p => p.id == getMonth(product.ordercreate))[0].nome,
             ano: getYear(product.ordercreate)
         }));
 
-
         return resul;
-
-        
 
     }
 
