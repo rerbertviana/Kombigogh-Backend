@@ -1,29 +1,27 @@
+import { getCustomRepository } from "typeorm";
 import ListOrderUserService from "@modules/users/services/ListOrderUserService";
 import { getMonth, getYear } from 'date-fns';
+import OrdersRepository from "../typeorm/repositories/OrdersRepository";
 
 
 interface Irequest {
-    user_id: string;
     ordermes: string;
-    ano: string;
     status: string;
+    ano: string;
 }
 
 
-class ListOrdersUserDataStatusService {
+class ListOrdersDataStatusService {
 
-    public async execute({ user_id, ordermes, ano, status}: Irequest): Promise<Object | undefined> {
+    public async execute({ ordermes, status, ano}: Irequest): Promise<Object | undefined> {
 
-        // pegando pedidos pelo usuario
-        const listOrders = new ListOrderUserService();
-        const orders = await listOrders.execute({ user_id });
+       //pegar todos os orders
+       const ordersRepository = getCustomRepository(OrdersRepository);
+       const orders = ordersRepository.find();
 
         // converter os valores recebidos em inteiros
         const orderMes = parseInt(ordermes);
         const orderAno = parseInt(ano);
-
-
-        const ordersorders = orders?.order;
 
          // setar meses 
          const meses: any[] = [];
@@ -79,12 +77,13 @@ class ListOrdersUserDataStatusService {
              },
          );
        
+
         // filtrar os pedidos pela datas
 
         let ordersData: any[] = [];
 
-        if (ordersorders) {
-            ordersData = ordersorders.filter(order => getMonth(order.created_at) === orderMes && getYear(order.created_at) === orderAno);
+        if (orders) {
+            ordersData = (await orders).filter(order => getMonth(order.created_at) === orderMes && getYear(order.created_at) === orderAno);
         }
 
         // filtrar pelo status
@@ -104,4 +103,4 @@ class ListOrdersUserDataStatusService {
     }
 }
 
-export default ListOrdersUserDataStatusService;
+export default ListOrdersDataStatusService;

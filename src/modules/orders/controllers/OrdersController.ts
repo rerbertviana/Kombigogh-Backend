@@ -9,6 +9,7 @@ import ListOrdersUserDataService from '../services/ListOrdersUserDataService';
 import ListOrdersUserDataStatusService from '../services/ListOrdersUserDataStatusService';
 import ListOrdersUserStatusService from '../services/ListOrdersUserStatusService';
 import ListOrdersUserService from '../services/ListOrdersUserService';
+import ListOrdersDataStatusService from '../services/ListOrdersDataStatusService';
 
 export default class OrdersController {
     public async show(request: Request, response: Response): Promise<Response> {
@@ -111,6 +112,16 @@ export default class OrdersController {
         const listorders = new ListOrdersUserStatusService();
 
         const orders = await listorders.execute({ user_id, status });
+
+        return response.json(orders);
+    }
+
+    public async ordersdatastatus(request: Request, response: Response): Promise<Response> {
+        const { ordermes, ano, status } = request.params;
+
+        const listorders = new ListOrdersDataStatusService();
+
+        const orders = await listorders.execute({ ordermes, ano, status });
 
         return response.json(orders);
     }

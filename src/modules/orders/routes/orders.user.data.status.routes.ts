@@ -6,7 +6,7 @@ import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 const ordersUserDataStatusRouter = Router();
 const ordersController = new OrdersController();
 
-ordersUserDataStatusRouter.use(isAuthenticated);
+// ordersUserDataStatusRouter.use(isAuthenticated);
 
 
 ordersUserDataStatusRouter.get(
@@ -21,6 +21,7 @@ ordersUserDataStatusRouter.get(
     }),
     ordersController.orderuserdatastatus,
 );
+
 ordersUserDataStatusRouter.get(
     '/:user_id/:status',
     celebrate({
@@ -30,6 +31,18 @@ ordersUserDataStatusRouter.get(
         },
     }),
     ordersController.orderuserstatus,
+);
+
+ordersUserDataStatusRouter.get(
+    '/:ordermes/:ano/:status',
+    celebrate({
+        [Segments.PARAMS]: {
+            ordermes: Joi.number().required(),
+            ano: Joi.number().required(),
+            status: Joi.string().required(),
+        },
+    }),
+    ordersController.ordersdatastatus,
 );
 
 export default ordersUserDataStatusRouter;
