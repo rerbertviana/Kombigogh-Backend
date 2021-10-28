@@ -39,7 +39,7 @@ class CreateProductService {
             descricao,
             preco,
             quantidade,
-            category_id
+            category_id,
         });
 
         await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');

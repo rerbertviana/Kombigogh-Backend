@@ -141,6 +141,7 @@ export default class ListOrdersproductsService {
 
         // criar um objeto que contenha os dados para ser apresentados no relatório
         const resul = productsSale.map(product => ({
+            imagem: p.filter(p=> p.id == product.producteste)[0].imagem,
             pedido: product.orderId,
             id_produto: product.producteste,
             nome: p.filter(p => p.id === product.producteste)[0].nome,
