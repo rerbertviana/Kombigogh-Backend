@@ -40,6 +40,7 @@ routes.use('/usersordersproducts', ordersproductsUsersRouter);
 routes.use('/categoriesproducts', productsCategoriesRouter);
 routes.use('/orders', ordersRouter);
 routes.use('/ordersuserdatastatus', ordersUserDataStatusRouter);
+routes.use('/ordersdatastatus', ordersDataStatusRouter);
 routes.use('/pdfproducts', pdfProductRouter);
 routes.use('/pdfusers', pdfUserRouter);
 routes.use('/pdforders', pdfOrderRouter);
