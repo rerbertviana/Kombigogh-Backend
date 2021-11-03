@@ -31,14 +31,14 @@ class UpdateProductService {
         }
 
         const redisCache = new RedisCache();
-        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
-    
+        
         product.nome = nome;
         product.descricao = descricao;
         product.preco = preco;
         product.quantidade = quantidade;
         product.category_id = category_id;
 
+        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
 
         await productsRepository.save(product);
 

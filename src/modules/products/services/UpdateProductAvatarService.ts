@@ -37,9 +37,11 @@ class UpdateProductAvatarService {
         }
 
         const redisCache = new RedisCache();
-        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
+       
 
         product.imagem = avatarFilename;
+
+        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
 
         await productsRepository.save(product);
 
