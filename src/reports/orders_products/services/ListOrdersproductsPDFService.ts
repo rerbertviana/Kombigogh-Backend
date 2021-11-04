@@ -5,21 +5,26 @@ import ListOrderService from '@modules/orders/services/ListOrderService';
 import ShowOrderService from '@modules/orders/services/ShowOrderService';
 import ListProductService from '@modules/products/services/ListProductService';
 import ListUserService from '@modules/users/services/ListUserService';
+import { getCustomRepository } from 'typeorm';
+import OrdersRepository from '@modules/orders/typeorm/repositories/OrdersRepository';
 
 export default class ListOrdersproductsPDFService {
 
     public async pdf(request: Request, response: Response): Promise<void> {
 
+        // REFAZER TODA ESSA PARTE
 
+        const ordersRepository = getCustomRepository(OrdersRepository);
+        const orders = ordersRepository.find();
         
-        const listorders = new ListOrderService();
+        //const listorders = new ListOrderService();
 
         // listar todos os pedidos
-        const orders = await listorders.execute();
+        //const orders = await listorders.execute();
 
 
         // setar um array contendo o valor total de cada pedido
-        const totalOrders = orders.map(order => order.total);
+        const totalOrders = (await orders).map(order => order.total);
 
         // pegar o valor total de todos os pedidos
         let total = 0;
@@ -29,19 +34,20 @@ export default class ListOrdersproductsPDFService {
         }
 
         // exibir o conteudo dos pedidos
-        const showOrders = new ShowOrderService();
+        // const showOrders = new ShowOrderService();
 
         const ordersproducts: any[] = [];
 
         // setar apenas os ids dos pedidos
-        const ordersids = orders.map(order => order.id)
+        const ordersids = (await orders).map(order => order.id)
 
         // pegar apenas os orders products de todos os pedidos
         for (let i = 0; i < ordersids.length; i++) {
-
             let id = ordersids[i];
-            let teste = await showOrders.execute({ id });
-            ordersproducts.push(teste.order_products);
+            let teste = await ordersRepository.findById( id );
+            if (teste) {
+                ordersproducts.push(teste.order_products);
+            }   
         }
 
 
