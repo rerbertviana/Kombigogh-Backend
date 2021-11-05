@@ -66,32 +66,45 @@ export default class ListOrdersUserPDFService {
         // Obtém a data/hora atual
         var data = new Date();
 
-        // Guarda cada pedaço em uma variável
-        var dia = data.getDate();           // 1-31
-        var dia_sem = data.getDay();            // 0-6 (zero=domingo)
-        var mes = data.getMonth();          // 0-11 (zero=janeiro)
-        var ano4 = data.getFullYear();       // 4 dígitos
-        var hora = data.getHours();          // 0-23
-        var min = data.getMinutes();        // 0-59
-        var seg = data.getSeconds();        // 0-59
-        var mseg = data.getMilliseconds();   // 0-999
-        var tz = data.getTimezoneOffset(); // em minutos
+         // Guarda cada pedaço em uma variável
+       var dia = data.getDate();           // 1-31
+       //var dia_sem = data.getDay();            // 0-6 (zero=domingo)
+       var mes = data.getMonth();          // 0-11 (zero=janeiro)
+       var ano4 = data.getFullYear();       // 4 dígitos
+       var hora = data.getHours();          // 0-23
+       var min = data.getMinutes();        // 0-59
+       //var seg = data.getSeconds();        // 0-59
+       //var mseg = data.getMilliseconds();   // 0-999
+       //var tz = data.getTimezoneOffset(); // em minutos
 
-        // Formata a data e a hora (note o mês + 1)
-        if (dia < 10 && mes < 10) {
-            var str_data = "0" + dia + '/' + "0" + (mes + 1) + '/' + ano4;
-        }
-        else {
-            if (dia < 10)
-                var str_data = "0" + dia + '/' + (mes + 1) + '/' + ano4;
+       // Formatar a data 
+       if (dia < 10 && mes <= 8) {
+           var str_data = "0" + dia + '/' + "0" + (mes + 1) + '/' + ano4;
+       }
+       if (dia < 10 && mes >= 9) {
+           var str_data = "0" + dia + '/' + (mes + 1) + '/' + ano4;
+       }
+       if (dia >=10 && mes <= 8) {
+           var str_data = dia + '/' + "0" + (mes + 1) + '/' + ano4;
+       }
+       if (dia >= 10 && mes >= 9) {
+           var str_data = dia + '/' + (mes + 1) + '/' + ano4;
+       }
 
-            else (mes > 10)
-            var str_data = dia + '/' + "0" + (mes + 1) + '/' + ano4;
+       //formatar hora
+       if (hora < 10 && min < 10) {
+           var str_hora = "0" + hora + ':' + "0" + min;
+       }
+       if (hora < 10 && min >= 10) {
+           var str_hora = "0" + hora + ':' + min;
+       }
+       if (hora >= 10 && min < 10) {
+           var str_hora = hora + ':' + "0" + min;
+       }
+       if (hora >= 10 && min >= 10) {
+           var str_hora = hora + ':' + min;
+       }
 
-        }
-
-        var str_hora = hora + ':' + min + ':' + seg;
-        
 
         const docDefinitions: TDocumentDefinitions = {
             defaultStyle: { font: "Helvetica" },
@@ -115,7 +128,7 @@ export default class ListOrdersUserPDFService {
             content: [
 
                 { text: '\nRELATÓRIO DE PEDIDOS\n', style: "header" },
-                { text: `Artista: ${ userName }\n\n`, style:"sub"},
+                { text: `\nVENDEDOR: ${ userName }\n\n`, style:"sub"},
 
                 {
                     table: {
@@ -154,7 +167,7 @@ export default class ListOrdersUserPDFService {
                 columnsTitle: {
                     fontSize: 15,
                     bold: true,
-                    fillColor: "#82D4D1",
+                    fillColor: "#69F690",
                     color: "#FFF",
                     alignment: "left",
                 },

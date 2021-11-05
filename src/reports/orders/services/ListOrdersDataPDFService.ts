@@ -3,6 +3,8 @@ import PDFPrinter from "pdfmake";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import ListOrderService from "@modules/orders/services/ListOrderService";
 import { getMonth, getYear } from 'date-fns';
+import { getCustomRepository } from "typeorm";
+import OrdersRepository from "@modules/orders/typeorm/repositories/OrdersRepository";
 
 
 export default class ListOrdersDataPDFService {
@@ -12,16 +14,16 @@ export default class ListOrdersDataPDFService {
 
         const { ordermes, ano } = request.params;
 
-        // listar todos os pedidos
-        const listorders = new ListOrderService();
-        const orders = await listorders.execute();
+        // pegar todos os pedidos
+        const ordersRepository = getCustomRepository(OrdersRepository);
+        const orders = ordersRepository.find();
 
         // converter os valores recebidos em inteiros
         const orderMes = parseInt(ordermes);
         const orderAno = parseInt(ano);
 
         // filtrar os pedidos pela datas
-        const ordersData = orders.filter(order => getMonth(order.created_at) === orderMes && getYear(order.created_at) === orderAno);
+        const ordersData = (await orders).filter(order => getMonth(order.created_at) === orderMes && getYear(order.created_at) === orderAno);
 
 
         const ordersLength = ordersData.length;
@@ -105,29 +107,43 @@ export default class ListOrdersDataPDFService {
 
         // Guarda cada pedaço em uma variável
         var dia = data.getDate();           // 1-31
-        var dia_sem = data.getDay();            // 0-6 (zero=domingo)
+        //var dia_sem = data.getDay();            // 0-6 (zero=domingo)
         var mes = data.getMonth();          // 0-11 (zero=janeiro)
         var ano4 = data.getFullYear();       // 4 dígitos
         var hora = data.getHours();          // 0-23
         var min = data.getMinutes();        // 0-59
-        var seg = data.getSeconds();        // 0-59
-        var mseg = data.getMilliseconds();   // 0-999
-        var tz = data.getTimezoneOffset(); // em minutos
+        //var seg = data.getSeconds();        // 0-59
+        //var mseg = data.getMilliseconds();   // 0-999
+        //var tz = data.getTimezoneOffset(); // em minutos
 
-        // Formata a data e a hora (note o mês + 1)
-        if (dia < 10 && mes < 10) {
+        // Formatar a data 
+        if (dia < 10 && mes <= 8) {
             var str_data = "0" + dia + '/' + "0" + (mes + 1) + '/' + ano4;
         }
-        else {
-            if (dia < 10)
-                var str_data = "0" + dia + '/' + (mes + 1) + '/' + ano4;
-
-            else (mes > 10)
+        if (dia < 10 && mes >= 9) {
+            var str_data = "0" + dia + '/' + (mes + 1) + '/' + ano4;
+        }
+        if (dia >=10 && mes <= 8) {
             var str_data = dia + '/' + "0" + (mes + 1) + '/' + ano4;
-
+        }
+        if (dia >= 10 && mes >= 9) {
+            var str_data = dia + '/' + (mes + 1) + '/' + ano4;
         }
 
-        var str_hora = hora + ':' + min + ':' + seg;
+        //formatar hora
+        if (hora < 10 && min < 10) {
+            var str_hora = "0" + hora + ':' + "0" + min;
+        }
+        if (hora < 10 && min >= 10) {
+            var str_hora = "0" + hora + ':' + min;
+        }
+        if (hora >= 10 && min < 10) {
+            var str_hora = hora + ':' + "0" + min;
+        }
+        if (hora >= 10 && min >= 10) {
+            var str_hora = hora + ':' + min;
+        }
+    
 
         const docDefinitions: TDocumentDefinitions = {
             defaultStyle: { font: "Helvetica" },
@@ -188,7 +204,7 @@ export default class ListOrdersDataPDFService {
                 columnsTitle: {
                     fontSize: 15,
                     bold: true,
-                    fillColor: "#82D4D1",
+                    fillColor: "#69F690",
                     color: "#FFF",
                     alignment: "left",
                 },

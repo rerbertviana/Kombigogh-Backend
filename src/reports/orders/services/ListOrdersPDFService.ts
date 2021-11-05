@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import PDFPrinter from "pdfmake";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import ListOrderService from "@modules/orders/services/ListOrderService";
+import { getCustomRepository } from "typeorm";
+import OrdersRepository from "@modules/orders/typeorm/repositories/OrdersRepository";
 
 
 
@@ -9,14 +11,15 @@ export default class ListOrdersPDFService {
 
 
     public async pdf(request: Request, response: Response): Promise<void> {
+        
+        // pegar todos os pedidos
+        const ordersRepository = getCustomRepository(OrdersRepository);
+        const orders = ordersRepository.find();
 
-        const listOrders = new ListOrderService();
+        const ordersLength = (await orders).length;
 
-        const orders = await listOrders.execute();
-
-        const ordersLength = orders.length;
-
-        const totalOrders = orders.map(order => order.total);
+        // setar total dos pedidos
+        const totalOrders = (await orders).map(order => order.total);
 
         let total = 0;
 
@@ -38,7 +41,7 @@ export default class ListOrdersPDFService {
         const body: any[] = [];
 
 
-        for await (let order of orders) {
+        for await (let order of await(orders)) {
             const rows = new Array();
             rows.push(order.id);
             rows.push(order.cliente);
@@ -51,32 +54,48 @@ export default class ListOrdersPDFService {
         // Obtém a data/hora atual
         var data = new Date();
 
-        // Guarda cada pedaço em uma variável
-        var dia = data.getDate();           // 1-31
-        var dia_sem = data.getDay();            // 0-6 (zero=domingo)
-        var mes = data.getMonth();          // 0-11 (zero=janeiro)
-        var ano4 = data.getFullYear();       // 4 dígitos
-        var hora = data.getHours();          // 0-23
-        var min = data.getMinutes();        // 0-59
-        var seg = data.getSeconds();        // 0-59
-        var mseg = data.getMilliseconds();   // 0-999
-        var tz = data.getTimezoneOffset(); // em minutos
+         // Obtém a data/hora atual
+         var data = new Date();
 
-        // Formata a data e a hora (note o mês + 1)
-        if (dia < 10 && mes < 10) {
-            var str_data = "0" + dia + '/' + "0" + (mes + 1) + '/' + ano4;
-        }
-        else {
-            if (dia < 10)
-                var str_data = "0" + dia + '/' + (mes + 1) + '/' + ano4;
-
-            else (mes > 10)
-            var str_data = dia + '/' + "0" + (mes + 1) + '/' + ano4;
-
-        }
-
-        var str_hora = hora + ':' + min + ':' + seg;
-
+         // Guarda cada pedaço em uma variável
+         var dia = data.getDate();           // 1-31
+         //var dia_sem = data.getDay();            // 0-6 (zero=domingo)
+         var mes = data.getMonth();          // 0-11 (zero=janeiro)
+         var ano4 = data.getFullYear();       // 4 dígitos
+         var hora = data.getHours();          // 0-23
+         var min = data.getMinutes();        // 0-59
+         //var seg = data.getSeconds();        // 0-59
+         //var mseg = data.getMilliseconds();   // 0-999
+         //var tz = data.getTimezoneOffset(); // em minutos
+ 
+         // Formatar a data 
+         if (dia < 10 && mes <= 8) {
+             var str_data = "0" + dia + '/' + "0" + (mes + 1) + '/' + ano4;
+         }
+         if (dia < 10 && mes >= 9) {
+             var str_data = "0" + dia + '/' + (mes + 1) + '/' + ano4;
+         }
+         if (dia >=10 && mes <= 8) {
+             var str_data = dia + '/' + "0" + (mes + 1) + '/' + ano4;
+         }
+         if (dia >= 10 && mes >= 9) {
+             var str_data = dia + '/' + (mes + 1) + '/' + ano4;
+         }
+ 
+         //formatar hora
+         if (hora < 10 && min < 10) {
+             var str_hora = "0" + hora + ':' + "0" + min;
+         }
+         if (hora < 10 && min >= 10) {
+             var str_hora = "0" + hora + ':' + min;
+         }
+         if (hora >= 10 && min < 10) {
+             var str_hora = hora + ':' + "0" + min;
+         }
+         if (hora >= 10 && min >= 10) {
+             var str_hora = hora + ':' + min;
+         }
+     
         const docDefinitions: TDocumentDefinitions = {
             defaultStyle: { font: "Helvetica" },
 
@@ -133,7 +152,7 @@ export default class ListOrdersPDFService {
                 columnsTitle: {
                     fontSize: 15,
                     bold: true,
-                    fillColor: "#82D4D1",
+                    fillColor: "#69F690",
                     color: "#FFF",
                     alignment: "left",
                 },

@@ -2,12 +2,10 @@ import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import ListOrdersStatusPDFService from '../services/ListOrdersStatusPDFService';
 import ListOrdersUserDataStatusPDFService from '../services/ListOrdersUserDataStatusPDFService';
-import ListOrdersUserStatusPDFService from '../services/ListOrdersUserStatusPDFService';
 
 const pdfOrderStatusRouter = Router();
 const listOrdersStatusPDF = new ListOrdersStatusPDFService();
 const listOrdersUserDataStatusPDF = new ListOrdersUserDataStatusPDFService();
-const listOrdersUserStatusPDF = new ListOrdersUserStatusPDFService();
 
 
 pdfOrderStatusRouter.get(
