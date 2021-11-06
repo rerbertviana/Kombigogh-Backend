@@ -187,6 +187,7 @@ export default class ListProductsUserCategoryPDFService {
                     fillColor: "#F4CB68",
                     color: "#FFF",
                     alignment: "left",
+                    margin: [0, 3, 0, 0]
                 },
                 foot: {
                     alignment: "right",

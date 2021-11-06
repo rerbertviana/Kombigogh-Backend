@@ -181,6 +181,7 @@ export default class ListOrdersUserStatusPDFService {
                     fillColor: "#69F690",
                     color: "#FFF",
                     alignment: "left",
+                    margin: [0, 3, 0, 0]
                 },
                 foot: {
                     alignment: "right",
