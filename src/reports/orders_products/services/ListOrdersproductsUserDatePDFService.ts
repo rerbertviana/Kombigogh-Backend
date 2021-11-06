@@ -287,6 +287,7 @@ export default class ListOrdersproductsUserDatePDFService {
                     fillColor: "#82D4D1",
                     color: "#FFF",
                     alignment: "left",
+                    margin: [0, 3, 0, 0]
                 },
                 foot: {
                     alignment: "right",

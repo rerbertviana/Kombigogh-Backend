@@ -134,7 +134,7 @@ export default class ListProductsCategoryPDFService {
                     table: {
 
                         heights: function (row) {
-                            return 30;
+                            return 20;
                         },
 
                         widths: ['*', 200, 125, '*'],
@@ -170,6 +170,7 @@ export default class ListProductsCategoryPDFService {
                     fillColor: "#F4CB68",
                     color: "#FFF",
                     alignment: "left",
+                    margin: [0, 3, 0, 0]
                 },
                 foot: {
                     alignment: "right",
