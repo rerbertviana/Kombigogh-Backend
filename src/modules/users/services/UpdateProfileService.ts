@@ -9,12 +9,11 @@ interface IRequest {
     nome: string;
     email: string;
     senha?: string;
-    senha_antiga?: string;
     telefone: string;
 }
 
 class UpdateProfileService {
-    public async execute({user_id, nome, email, senha, senha_antiga, telefone }: IRequest): Promise<User> {
+    public async execute({user_id, nome, email, senha, telefone }: IRequest): Promise<User> {
         
         const usersRepository = getCustomRepository(UsersRepository);
 
@@ -35,22 +34,9 @@ class UpdateProfileService {
         if (userUpdateEmail && userUpdateEmail.id !== user_id) {
             throw new AppError('Já existe um usuário cadastrado com esse email.');
         }
-
-        if (senha && !senha_antiga) {
-            throw new AppError('Por favor digite sua ultima senha.');
-        }
-
-        if (senha && senha_antiga) {
-           
-            const checkOldPassword = await compare(senha_antiga, user.senha);
-
-            if (!checkOldPassword) {
-                throw new AppError('Senha antiga não confere.');
-            }
-
-            user.senha = await hash(senha, 8);
-        }
-
+        
+        if(senha)
+        user.senha = await hash(senha, 8);
         user.nome = nome;
         user.email = email;
         user.telefone = telefone;
