@@ -34,21 +34,7 @@ class UpdateProfileService {
         if (userUpdateEmail && userUpdateEmail.id !== user_id) {
             throw new AppError('Já existe um usuário cadastrado com esse email.');
         }
-
-        // if (senha && !senha_antiga) {
-        //     throw new AppError('Por favor digite sua ultima senha.');
-        // }
-
-        // if (senha && senha_antiga) {
-           
-        //     const checkOldPassword = await compare(senha_antiga, user.senha);
-
-        //     if (!checkOldPassword) {
-        //         throw new AppError('Senha antiga não confere.');
-        //     }
-
-            
-        // }
+        
         if(senha)
         user.senha = await hash(senha, 8);
         user.nome = nome;
