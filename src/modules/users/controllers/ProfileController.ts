@@ -20,7 +20,7 @@ export default class ProfileController {
 
     public async update(request: Request, response: Response): Promise<Response> {
 
-        const { nome, email, senha, senha_antiga, telefone } = request.body;
+        const { nome, email, senha, telefone } = request.body;
         const user_id = request.user.id;
 
         const updateProfile = new UpdateProfileService();
@@ -30,7 +30,6 @@ export default class ProfileController {
             nome,
             email,
             senha,
-            senha_antiga,
             telefone,
         });
 

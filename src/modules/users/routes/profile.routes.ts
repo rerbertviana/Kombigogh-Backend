@@ -16,7 +16,6 @@ profileRouter.put(
         [Segments.BODY]: {
             nome: Joi.string().required(),
             email: Joi.string().email().required(),
-            senha_antiga: Joi.string(),
             senha: Joi.string().optional(),
             confirmacao_senha: Joi.string()
                 .valid(Joi.ref('senha'))
