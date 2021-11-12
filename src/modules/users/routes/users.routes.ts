@@ -47,4 +47,28 @@ usersRouter.patch(
     usersAvatarController.update,
 );
 
+usersRouter.put(
+    '/:user_id',
+    isAuthenticated,
+    celebrate({
+        [Segments.PARAMS]: {
+            user_id: Joi.string().uuid().required(),
+        },
+        [Segments.BODY]: {
+            nome: Joi.string().required(),
+            email: Joi.string().email().required(),
+            senha: Joi.string().optional(),
+            confirmacao_senha: Joi.string()
+                .valid(Joi.ref('senha'))
+                .when('senha', {
+                    is: Joi.exist(),
+                    then: Joi.required(),
+                }),
+            telefone: Joi.string(),
+        },
+    }),
+    usersController.update,
+);
+
+
 export default usersRouter;

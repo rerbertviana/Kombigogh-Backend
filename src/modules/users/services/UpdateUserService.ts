@@ -12,7 +12,7 @@ interface IRequest {
     telefone: string;
 }
 
-class UpdateProfileService {
+class UpdateUserService {
     public async execute({user_id, nome, email, senha, telefone }: IRequest): Promise<User> {
         
         const usersRepository = getCustomRepository(UsersRepository);
@@ -47,4 +47,4 @@ class UpdateProfileService {
     }
 }
 
-export default UpdateProfileService;
+export default UpdateUserService;

@@ -7,6 +7,7 @@ import ListOrderUserService from "../services/ListOrderUserService";
 import ListProductUserService from "../services/ListProductUserService";
 import ListUserService from "../services/ListUserService";
 import { classToClass } from 'class-transformer';
+import UpdateUserService from "../services/UpdateUserService";
 
 
 
@@ -32,6 +33,23 @@ export default class UsersController {
             email,
             senha,
             telefone
+        });
+
+        return response.json(classToClass(user));
+    }
+
+    public async update(request: Request, response: Response): Promise<Response> {
+
+        const { nome, email, senha, telefone, user_id } = request.body;
+
+        const updateUsers = new UpdateUserService();
+
+        const user = await updateUsers.execute({
+            user_id,
+            nome,
+            email,
+            senha,
+            telefone,
         });
 
         return response.json(classToClass(user));
