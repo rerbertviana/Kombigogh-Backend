@@ -40,7 +40,8 @@ export default class UsersController {
 
     public async update(request: Request, response: Response): Promise<Response> {
 
-        const { nome, email, senha, telefone, user_id } = request.body;
+        const { user_id } = request.params;
+        const { nome, email, senha, telefone} = request.body;
 
         const updateUsers = new UpdateUserService();
 
