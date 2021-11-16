@@ -19,6 +19,9 @@ class Product {
     @Column()
     imagem: string;
 
+    @Column()
+    ativo: boolean;
+
     @Column("float8")
     preco: number;
 

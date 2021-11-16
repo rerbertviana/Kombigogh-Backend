@@ -24,9 +24,6 @@ class CreateProductService {
         const productsRepository = getCustomRepository(ProductsRepository);
         const products = await productsRepository.findByName(nome);
 
-        const usersRepository = getCustomRepository(UsersRepository);
-        const users = await usersRepository.findById(user_id);
-
         if (products) {
             throw new AppError('Já existe um produto cadastrado com mesmo nome.');
         }
@@ -40,6 +37,8 @@ class CreateProductService {
             preco,
             quantidade,
             category_id,
+            ativo: true
+            
         });
 
         await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');

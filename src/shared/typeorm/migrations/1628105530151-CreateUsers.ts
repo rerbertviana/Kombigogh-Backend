@@ -31,6 +31,10 @@ export class CreateUsers1628089196200 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
+                        name: 'ativo',
+                        type: 'boolean',
+                    },
+                    {
                         name: 'avatar',
                         type: 'varchar',
                         isNullable: true,

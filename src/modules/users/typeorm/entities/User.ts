@@ -24,6 +24,9 @@ class User {
     @Column()
     avatar: string;
 
+    @Column()
+    ativo: boolean;
+
     @OneToMany(() => Product, product => product.user, {
         cascade: true,
     })

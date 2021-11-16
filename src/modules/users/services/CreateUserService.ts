@@ -36,6 +36,7 @@ class CreateUserService {
             email,
             senha: hashedPassword,
             telefone,
+            ativo: true
         });
 
         await usersRepository.save(user);

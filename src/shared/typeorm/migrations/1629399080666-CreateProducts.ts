@@ -47,6 +47,10 @@ export class CreateProducts1629399080666 implements MigrationInterface {
                         isNullable: true,
                     },
                     {
+                        name: 'ativo',
+                        type: 'boolean',
+                    },
+                    {
                         name: 'created_at',
                         type: 'timestamp with time zone',
                         default: 'now()',
