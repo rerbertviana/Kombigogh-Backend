@@ -35,6 +35,10 @@ class CreateSessionsService {
             throw new AppError('email ou senha incorretas!', 401);
         }
 
+        if(user.ativo == false) {
+            throw new AppError('Usuário inativo!', 401);
+        }
+
         const token = sign({}, authconfig.jwt.secret, {
             subject: user.id,
             expiresIn: authconfig.jwt.expiresIn,

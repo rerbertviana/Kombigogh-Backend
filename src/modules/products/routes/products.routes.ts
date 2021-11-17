@@ -12,11 +12,11 @@ const productAvatarController = new ProductAvatarController();
 
 const upload = multer(uploadConfig);
 
-// productsRouter.use(isAuthenticated);
+productsRouter.use(isAuthenticated);
 
 productsRouter.get('/', productsController.index);
 
-productsRouter.get('/actives', productsController.actives);
+productsRouter.get('/actives', productsController.listactives);
 
 productsRouter.get('/:user_id',
     celebrate({
@@ -51,6 +51,27 @@ productsRouter.post(
         },
     }),
     productsController.create
+);
+
+
+productsRouter.post(
+    '/disable/:product_id',
+    celebrate({
+        [Segments.PARAMS]: {
+            product_id: Joi.string().uuid().required(),
+        }
+    }),
+    productsController.disable
+);
+
+productsRouter.post(
+    '/active/:product_id',
+    celebrate({
+        [Segments.PARAMS]: {
+            product_id: Joi.string().uuid().required(),
+        }
+    }),
+    productsController.active
 );
 
 productsRouter.delete(
