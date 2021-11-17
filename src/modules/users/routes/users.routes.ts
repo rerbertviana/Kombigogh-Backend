@@ -69,5 +69,26 @@ usersRouter.put(
     usersController.update,
 );
 
+usersRouter.post(
+    '/disable/:user_id',
+    celebrate({
+        [Segments.PARAMS]: {
+            user_id: Joi.string().uuid().required(),
+        },
+    }),
+    usersController.disable,
+);
+
+
+usersRouter.post(
+    '/active/:user_id',
+    celebrate({
+        [Segments.PARAMS]: {
+            user_id: Joi.string().uuid().required(),
+        },
+    }),
+    usersController.active,
+);
+
 
 export default usersRouter;

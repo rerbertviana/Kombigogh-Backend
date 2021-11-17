@@ -8,6 +8,8 @@ import ListProductUserService from "../services/ListProductUserService";
 import ListUserService from "../services/ListUserService";
 import { classToClass } from 'class-transformer';
 import UpdateUserService from "../services/UpdateUserService";
+import DisableUserService from "../services/DisableUserService";
+import ActiveUserService from "../services/ActiveUserService";
 
 
 
@@ -112,6 +114,28 @@ export default class UsersController {
         const ordersproducts = await listordersproductsdata.execute({ user_id, mes, ano });
 
         return response.json(ordersproducts);
+    }
+
+    public async disable(request: Request, response: Response): Promise<Response> {
+
+        const { user_id } = request.params;
+
+        const disableUser = new DisableUserService();
+
+        const user = await disableUser.execute({ user_id });
+
+        return response.json(user);
+    }
+
+    public async active(request: Request, response: Response): Promise<Response> {
+
+        const { user_id } = request.params;
+
+        const activeUser = new ActiveUserService();
+
+        const user = await activeUser.execute({ user_id });
+
+        return response.json(user);
     }
 
 

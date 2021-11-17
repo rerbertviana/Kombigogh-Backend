@@ -5,6 +5,7 @@ import DeleteProductService from "../services/DeleteProductService";
 import ListProductService from "../services/ListProductService";
 import { classToClass } from 'class-transformer';
 import ListProductUserCategoryService from "../services/ListProductUserCategoryService";
+import ListActiveProductService from "../services/ListActiveProductService";
 
 
 export default class ProductsController {
@@ -35,6 +36,15 @@ export default class ProductsController {
         const listproducts = new ListProductService();
 
         const products = await listproducts.execute();
+
+        return response.json(products);
+    }
+
+    public async actives(request: Request, response: Response): Promise<Response> {
+
+        const listproductsactives = new ListActiveProductService();
+
+        const products = await listproductsactives.execute();
 
         return response.json(products);
     }

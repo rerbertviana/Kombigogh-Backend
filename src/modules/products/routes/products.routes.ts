@@ -12,9 +12,11 @@ const productAvatarController = new ProductAvatarController();
 
 const upload = multer(uploadConfig);
 
-productsRouter.use(isAuthenticated);
+// productsRouter.use(isAuthenticated);
 
 productsRouter.get('/', productsController.index);
+
+productsRouter.get('/actives', productsController.actives);
 
 productsRouter.get('/:user_id',
     celebrate({
