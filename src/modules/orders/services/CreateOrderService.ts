@@ -15,10 +15,11 @@ interface IRequest {
     user_id: string;
     products: IProduct[];
     cliente: string;
+    pagamento: string;
 }
 
 class CreateOrderService {
-    public async execute({ user_id, products, cliente}: IRequest): Promise<Order> {
+    public async execute({ user_id, products, cliente, pagamento}: IRequest): Promise<Order> {
         
         const ordersRepository = getCustomRepository(OrdersRepository);
         const usersRepository = getCustomRepository(UsersRepository);
@@ -75,7 +76,8 @@ class CreateOrderService {
             products_array: serializedProducts,
             cliente,
             status: "ok",
-            total: 0
+            total: 0,
+            pagamento
         })
 
         const { order_products } = order;

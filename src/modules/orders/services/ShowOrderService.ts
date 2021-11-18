@@ -65,6 +65,7 @@ class ShowOrderService {
             id: order?.id,
             cliente: order?.cliente,
             vendedor: order?.user.nome,
+            pagamento: order?.pagamento,
             status: order?.status,
             total: order?.total,
         })

@@ -23,7 +23,7 @@ export default class OrdersController {
     }
 
     public async create(request: Request, response: Response): Promise<Response> {
-        const { cliente, products } = request.body;
+        const { cliente, products, pagamento } = request.body;
         const user_id = request.user.id
 
         const createOrder = new CreateOrderService();
@@ -31,7 +31,8 @@ export default class OrdersController {
         const order = await createOrder.execute({
             user_id,
             products,
-            cliente
+            cliente,
+            pagamento
         });
 
         return response.json(order);

@@ -30,6 +30,9 @@ class Order {
     @Column()
     status: string;
 
+    @Column()
+    pagamento: string;
+
     @Column("float8")
     total: number;
 

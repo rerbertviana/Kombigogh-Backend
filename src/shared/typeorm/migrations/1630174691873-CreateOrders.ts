@@ -28,6 +28,10 @@ export class CreateOrders1630174691873 implements MigrationInterface {
                         isNullable: true,
                     },
                     {
+                        name: 'pagamento',
+                        type: 'varchar',
+                    },
+                    {
                         name: 'user_id',
                         type: 'uuid',
                         isNullable: true,

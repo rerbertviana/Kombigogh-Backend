@@ -69,6 +69,7 @@ ordersRouter.post(
         [Segments.BODY]: {
             products: Joi.required(),
             cliente: Joi.string().required(),
+            pagamento: Joi.string().required(),
         },
     }),
     ordersController.create,

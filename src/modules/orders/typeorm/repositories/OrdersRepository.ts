@@ -13,6 +13,7 @@ interface IRequest {
     cliente: string;
     status: string;
     total: number;
+    pagamento:string;
 }
 
 @EntityRepository(Order)
@@ -25,13 +26,14 @@ class OrdersRepository extends Repository<Order> {
         return order;
     }
 
-    public async createOrder({ user, products_array, cliente, status, total}: IRequest): Promise<Order> {
+    public async createOrder({ user, products_array, cliente, status, total, pagamento}: IRequest): Promise<Order> {
         const order = await this.create({
             user_id: user,
             order_products: products_array,
             cliente,
             status,
-            total
+            total,
+            pagamento
         });
 
         await this.save(order);
