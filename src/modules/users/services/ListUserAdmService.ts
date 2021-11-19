@@ -10,7 +10,7 @@ class ListUserAdmService {
         const usersRepository = getCustomRepository(UsersRepository);
         const user = usersRepository.find();
 
-        const userAdm = (await user).filter(user => user.nome != 'ADM')
+        const userAdm = (await user).filter(user => user.nome != 'ADM');
 
         return userAdm;
     }
