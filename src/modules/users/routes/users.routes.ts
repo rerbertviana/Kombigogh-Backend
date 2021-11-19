@@ -16,6 +16,8 @@ const upload = multer(uploadConfig);
 
 usersRouter.get('/', isAuthenticated, usersController.index);
 
+usersRouter.get('/adm', isAuthenticated, usersController.adm);
+
 
 usersRouter.post(
     '/',

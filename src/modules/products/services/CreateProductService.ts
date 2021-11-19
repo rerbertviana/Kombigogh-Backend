@@ -1,5 +1,3 @@
-import { UsersRepository } from "@modules/users/typeorm/repositories/UsersRepository";
-import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
 import { getCustomRepository } from "typeorm";
 import Product from "../typeorm/entities/Product";
@@ -28,8 +26,6 @@ class CreateProductService {
             throw new AppError('Já existe um produto cadastrado com mesmo nome.');
         }
 
-        const redisCache = new RedisCache();
-
         const product = productsRepository.create({
             user_id,
             nome,
@@ -40,8 +36,6 @@ class CreateProductService {
             ativo: true
             
         });
-
-        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
         
         await productsRepository.save(product);
              

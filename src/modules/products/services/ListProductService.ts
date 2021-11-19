@@ -1,7 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import Product from "../typeorm/entities/Product";
 import ProductsRepository from "../typeorm/repositories/ProductsRepository";
-import RedisCache from '@shared/cache/RedisCache';
 
 
 class ListProductService {
@@ -9,16 +8,8 @@ class ListProductService {
     public async execute(): Promise<Product[]> {
 
         const productsRepository = getCustomRepository(ProductsRepository);
-        
-        const redisCache = new RedisCache();
 
-        let products = await redisCache.recover<Product[]>('api-kombigogh-PRODUCT_LIST',);
-
-        if (!products) {
-
-            products = await productsRepository.find();
-            await redisCache.save('api-kombigogh-PRODUCT_LIST', products);
-        }
+        const products = await productsRepository.find();
 
         return products;
     }

@@ -10,6 +10,7 @@ import { classToClass } from 'class-transformer';
 import UpdateUserService from "../services/UpdateUserService";
 import DisableUserService from "../services/DisableUserService";
 import ActiveUserService from "../services/ActiveUserService";
+import ListUserAdmService from "../services/ListUserAdmService";
 
 
 
@@ -18,6 +19,15 @@ export default class UsersController {
     public async index(request: Request, response: Response): Promise<Response> {
         
         const listusers = new ListUserService();
+
+        const users = await listusers.execute();
+
+        return response.json(classToClass(users));
+    }
+
+    public async adm(request: Request, response: Response): Promise<Response> {
+
+        const listusers = new ListUserAdmService();
 
         const users = await listusers.execute();
 
