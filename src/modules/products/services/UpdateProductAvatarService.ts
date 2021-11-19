@@ -5,9 +5,6 @@ import fs from 'fs';
 import uploadConfig from '@config/upload';
 import Product from "../typeorm/entities/Product";
 import ProductsRepository from "../typeorm/repositories/ProductsRepository";
-import RedisCache from "@shared/cache/RedisCache";
-
-
 
 interface Irequest {
     product_id: string;
@@ -36,12 +33,7 @@ class UpdateProductAvatarService {
             }
         }
 
-        const redisCache = new RedisCache();
-       
-
         product.imagem = avatarFilename;
-
-        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
 
         await productsRepository.save(product);
 

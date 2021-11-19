@@ -1,4 +1,3 @@
-import RedisCache from '@shared/cache/RedisCache';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Product from '../typeorm/entities/Product';
@@ -29,16 +28,12 @@ class UpdateProductService {
         if (productUpdateName && productUpdateName.id !== product_id) {
             throw new AppError('Já existe produto cadastrado com mesmo nome.');
         }
-
-        const redisCache = new RedisCache();
         
         product.nome = nome;
         product.descricao = descricao;
         product.preco = preco;
         product.quantidade = quantidade;
         product.category_id = category_id;
-
-        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
 
         await productsRepository.save(product);
 

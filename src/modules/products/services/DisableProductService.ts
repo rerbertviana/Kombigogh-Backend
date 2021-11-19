@@ -1,4 +1,3 @@
-import RedisCache from '@shared/cache/RedisCache';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Product from '../typeorm/entities/Product';
@@ -20,10 +19,6 @@ class DisableProductService {
         }
 
         product.ativo = false;
-
-        const redisCache = new RedisCache();
-       
-        await redisCache.invalidate('api-kombigogh-PRODUCT_LIST');
 
         await productsRepository.save(product);
 
