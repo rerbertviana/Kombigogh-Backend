@@ -12,6 +12,8 @@ class ListUserAdmService {
 
         const userAdm = (await user).filter(user => user.nome != 'ADM');
 
+        console.log(userAdm);
+
         return userAdm;
     }
 }
