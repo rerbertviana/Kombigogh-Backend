@@ -13,7 +13,9 @@ class ListActiveProductService {
 
         const productsActives = products.filter(product => product.ativo == true)
 
-        return productsActives;
+        const listproducts = productsActives.filter(product => product.quantidade != 0)
+
+        return listproducts;
     }
 }
 
