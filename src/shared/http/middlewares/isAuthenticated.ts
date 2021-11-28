@@ -33,7 +33,7 @@ export default function isAuthenticated(
         
         return next();
     } catch {
-        throw new AppError('JWT Token inválido!');
+        throw new AppError('JWT Token inválido!', 401);
     }
 
 
