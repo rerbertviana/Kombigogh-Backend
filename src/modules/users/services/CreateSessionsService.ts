@@ -26,17 +26,17 @@ class CreateSessionsService {
         const user = await usersRepository.findByEmail(email);
 
         if (!user) {
-            throw new AppError('email ou senha incorretas!', 401);
+            throw new AppError('email ou senha incorretas!');
         }
 
         const passwordConfirmed = await compare(senha, user.senha);
 
         if (!passwordConfirmed) {
-            throw new AppError('email ou senha incorretas!', 401);
+            throw new AppError('email ou senha incorretas!');
         }
 
         if(user.ativo == false) {
-            throw new AppError('Usuário inativo!', 401);
+            throw new AppError('Usuário inativo!');
         }
 
         const token = sign({}, authconfig.jwt.secret, {
