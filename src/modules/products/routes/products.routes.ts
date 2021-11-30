@@ -27,6 +27,16 @@ productsRouter.get('/:user_id',
     productsController.productsuser
 );
 
+productsRouter.get('/active/:user_id/:category_id',
+    celebrate({
+        [Segments.PARAMS]: {
+            user_id: Joi.string().uuid().required(),
+            category_id: Joi.string().uuid().required(),
+        },
+    }),
+    productsController.activeproductsusercategory
+);
+
 productsRouter.get('/:user_id/:category_id',
     celebrate({
         [Segments.PARAMS]: {
