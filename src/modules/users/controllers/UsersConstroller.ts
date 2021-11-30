@@ -11,6 +11,7 @@ import UpdateUserService from "../services/UpdateUserService";
 import DisableUserService from "../services/DisableUserService";
 import ActiveUserService from "../services/ActiveUserService";
 import ListUserAdmService from "../services/ListUserAdmService";
+import ListProductUserActiveService from "../services/ListProductUserActiveService";
 
 
 
@@ -141,7 +142,7 @@ export default class UsersController {
 
         const { user_id } = request.params;
 
-        const activeUser = new ActiveUserService();
+        const activeUser = new ListProductUserActiveService();
 
         const user = await activeUser.execute({ user_id });
 

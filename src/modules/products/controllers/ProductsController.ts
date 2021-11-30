@@ -8,6 +8,7 @@ import ListProductUserCategoryService from "../services/ListProductUserCategoryS
 import ListActiveProductService from "../services/ListActiveProductService";
 import DisableProductService from "../services/DisableProductService";
 import ActiveProductService from "../services/ActiveProductService";
+import ListProductUserActiveService from "@modules/users/services/ListProductUserActiveService";
 
 
 export default class ProductsController {
@@ -98,6 +99,17 @@ export default class ProductsController {
         const listprodcuts = new ListProductUserCategoryService();
 
         const users = await listprodcuts.execute({ user_id, category_id });
+
+        return response.json(classToClass(users));
+    }
+
+    public async activeproductsuser(request: Request, response: Response): Promise<Response> {
+
+        const { user_id } = request.params;
+
+        const listprodcuts = new ListProductUserActiveService();
+
+        const users = await listprodcuts.execute({ user_id });
 
         return response.json(classToClass(users));
     }

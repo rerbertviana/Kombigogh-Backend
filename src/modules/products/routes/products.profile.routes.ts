@@ -18,7 +18,6 @@ productsProfileRouter.get(
     profileProductsController.show
 );
 
-
 productsProfileRouter.put(
     '/:product_id/:category_id',
     celebrate({
@@ -34,6 +33,15 @@ productsProfileRouter.put(
         },
     }),
     profileProductsController.update,
+);
+
+productsProfileRouter.get('/active/:user_id',
+    celebrate({
+        [Segments.PARAMS]: {
+            user_id: Joi.string().uuid().required(),
+        },
+    }),
+    profileProductsController.activeproductsuser
 );
 
 export default productsProfileRouter;

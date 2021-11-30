@@ -37,6 +37,7 @@ productsRouter.get('/:user_id/:category_id',
     productsController.productsusercategory
 );
 
+
 productsRouter.post(
     '/:category_id',
     celebrate({

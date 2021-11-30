@@ -11,11 +11,9 @@ class ListActiveProductService {
 
         const products = await productsRepository.find();
 
-        const productsActives = products.filter(product => product.ativo == true)
+        const productsActives = products.filter(product => product.ativo == true && product.quantidade != 0)
 
-        const listproducts = productsActives.filter(product => product.quantidade != 0)
-
-        return listproducts;
+        return productsActives;
     }
 }
 

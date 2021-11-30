@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import CreateCategoryService from "../services/CreateCategoryService";
 import DeleteCategoryService from "../services/DeleteCategoryService";
 import ListCategoryService from "../services/ListCategoryService";
+import ListProductCategoryActiveService from "../services/ListProductCategoryActiveService";
 import ListProductCategoryService from "../services/ListProductCategoryService";
 import ShowCategoryService from "../services/ShowCategoryService";
 import UpdateCategoryService from "../services/UpdateCategoryService";
@@ -70,6 +71,17 @@ export default class CategoriesController {
         const { category_id } = request.params;
 
         const listProducts = new ListProductCategoryService();
+
+        const products = await listProducts.execute({ category_id });
+
+        return response.json(products);
+    }
+
+    public async activesproducts(request: Request, response: Response): Promise<Response> {
+
+        const { category_id } = request.params;
+
+        const listProducts = new ListProductCategoryActiveService();
 
         const products = await listProducts.execute({ category_id });
 

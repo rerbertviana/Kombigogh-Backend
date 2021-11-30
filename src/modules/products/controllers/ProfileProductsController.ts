@@ -1,3 +1,4 @@
+import ListProductUserActiveService from "@modules/users/services/ListProductUserActiveService";
 import { Request, Response } from "express";
 import ShowProductService from "../services/ShowProductService";
 import UpdateProductService from "../services/UpdateProductService";
@@ -32,6 +33,16 @@ export default class ProfileProductsController {
       quantidade,
       category_id
     });
+
+    return response.json(product);
+  }
+
+  public async activeproductsuser(request: Request, response: Response): Promise<Response> {
+
+    const { user_id } = request.params;
+    const showProduct = new ListProductUserActiveService();
+
+    const product = await showProduct.execute({ user_id })
 
     return response.json(product);
   }

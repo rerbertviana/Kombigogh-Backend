@@ -18,4 +18,14 @@ productsCategoriesRouter.get(
     }),
     categoriesController.products);
 
+productsCategoriesRouter.get(
+    '/active/:category_id',
+    isAuthenticated,
+    celebrate({
+        [Segments.PARAMS]: {
+            category_id: Joi.string().uuid().required(),
+        },
+    }),
+    categoriesController.activesproducts);
+
 export default productsCategoriesRouter;
